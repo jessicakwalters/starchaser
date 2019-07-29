@@ -1,3 +1,4 @@
+
 DROP TABLE IF EXISTS dark_parks;
 
 CREATE TABLE dark_parks (
