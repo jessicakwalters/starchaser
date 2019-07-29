@@ -80,9 +80,7 @@ Park.prototype.save = function() {
   let values = [this.park_name, this.location_name, this.lat, this.long, this.img_url, this.learn_more_url, this.idsa_desig]
 
   return client.query(SQL, values);
-}
-  response.render('pages/index');
-});
+};
 
 
 function getLatLong(request, response) {
@@ -118,18 +116,3 @@ function getWeather( request, response ){
       response.send( request.body );
     }).catch( error => console.log( error ) );
 }
-
-// const location = new Location ( request.query.data , rawData );
-// function Location( query, data ){
-
-//   this.search_query = query;
-//   this.formatted_address = data.body.results[0].formatted_address;
-//   this.latitude = data.body.results[0].geometry.location.lat;
-//   this.longitude = data.body.results[0].geometry.location.lng;
-
-// }
-
-// function getWeather( location, response ){
-//   const url = `https://api.darksky.net/forecast/${process.env.WEATHER_API_KEY}/${request.query.data.latitude},${request.query.data.longitude}`;
-
-// }
