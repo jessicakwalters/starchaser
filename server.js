@@ -116,6 +116,8 @@ function getWeather( request, response, next ){
 
 function createDistanceURL( request ){
 
+  request.body.parkData = {};
+
   let SQL = 'SELECT * FROM dark_parks;';
 
   return client.query(SQL)
@@ -124,14 +126,18 @@ function createDistanceURL( request ){
         console.log( 'no parks?' )
       } else {
         let url = '';
-        results.rows.forEach( park => {
-          // request.body.id = park.id;
+        results.rows.map( park => {
           if( url.length ){
             url += '|';
           }
           url += park.lat + ',' + park.long;
+          let newPark = {};
+          newPark.id = park.id;
+          newPark.park_name = park.park_name;
+          return newPark;
         });
-        request.body.url = url;
+        request.body.parkData.url = url;
+        console.log(request.body);
         return request;
       }
     })
