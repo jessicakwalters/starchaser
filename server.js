@@ -144,7 +144,6 @@ function getDistances( request, response ){
       let url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${request.body.lat},${request.body.long}&destinations=${request.body.url}&key=${process.env.GEOCODE_API_KEY}`;
       return superagent.get(url)
         .then( results => {
-          
           response.send(results.body.rows[0].elements.map(element => element.distance.text))
         });
     })
