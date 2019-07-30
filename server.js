@@ -79,7 +79,7 @@ Park.prototype.save = function() {
 };
 
 
-function getLatLong(request, response) {
+function getLatLong(request, response, next) {
 
   let url= `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.search}&key=${process.env.GEOCODE_API_KEY}`;
 
@@ -131,7 +131,7 @@ function createDistanceURL( request ){
           }
           url += park.lat + ',' + park.long;
         });
-        request.body.locationData.url = url;
+        request.body.url = url;
         return request;
       }
     })
@@ -141,10 +141,10 @@ function createDistanceURL( request ){
 function getDistances( request, response ){
   createDistanceURL( request )
     .then( request => {
-      let url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${request.body.lat},${request.body.long}&destinations=${request.body.locationData.url}&key=${process.env.GEOCODE_API_KEY}`;
+      let url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${request.body.lat},${request.body.long}&destinations=${request.body.url}&key=${process.env.GEOCODE_API_KEY}`;
       return superagent.get(url)
         .then( results => {
-          console.log(destinations, results.body)
+          
           response.send(results.body.rows[0].elements.map(element => element.distance.text))
         });
     })
