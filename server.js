@@ -36,6 +36,10 @@ app.get('/', (request, response) => {
   response.render('pages/index');
 });
 
+app.get('/results', (request, response) => {
+  response.render('pages/results');
+})
+
 app.post('/', getLatLong, getDistances, addWeatherData)
 // app.get('/')
 
