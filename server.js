@@ -60,7 +60,7 @@ app.get('/parks', (request, response) => {
 
       const park = new Park(parkObj);
       park.save();
-
+      return park;
     })
 
     response.send(newcrap);
@@ -125,7 +125,7 @@ function createDistanceURL( request ){
       } else {
         let url = '';
         results.rows.forEach( park => {
-          // request.body.locationData.locationKey = id;
+          // request.body.id = park.id;
           if( url.length ){
             url += '|';
           }
