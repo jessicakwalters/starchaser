@@ -1,3 +1,4 @@
+
 @media all and (min-width: 200px) {
 
 * {
@@ -7,8 +8,7 @@
 }
 
 body {
-  width: 110%;
-  /* background-size: cover; */
+  width: 100%;
   background-image: url('../assets/starry-night-cropped-vertical.jpg');
   background-repeat: no-repeat;
 }
