@@ -1,17 +1,13 @@
 
-@media all and (min-width: 200px) {
-
-* {
-  font-family: 'Dosis', sans-serif;
-  /* font-family: 'Rock Salt', cursive; */
-
-}
+@media screen and (min-width: 200px) {
 
 body {
-  width: 110%;
+  width: 100%;
   /* background-size: cover; */
   background-image: url('../assets/starry-night-cropped-vertical.jpg');
   background-repeat: no-repeat;
+  color: #F5F1F1;
+  font-family: 'Dosis', sans-serif;
 }
 
 ul {
@@ -31,6 +27,8 @@ nav {
   position: absolute;
   left: 0;
   top: 0;
+  padding-top: 3%;
+  padding-bottom: 4%;
 }
 
 .logo-container {
@@ -46,10 +44,12 @@ nav {
 .flex {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .location-form {
-  margin-top: 80%;
+  width: 70%;
+  margin-top: 60%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -63,6 +63,7 @@ input[type=text] {
   border: none;
   border-bottom: 2px solid #C7C8D0;
   font-size: 2em;
+  width: 100%;
   color: white;
 }
 
@@ -75,6 +76,58 @@ input:focus {
   outline: none;
 }
 
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+}
 
+.vertical-align {
+  margin-top: 25%;
+}
+
+.card {
+  background-color: #090D0D;
+  opacity: .7;
+  padding: 0 5% 5% 5%;
+  border-radius: 5%;
+  box-shadow: 0px 0px 7px #A2A3B1;
+  font-size: 2em;
+  text-align: center;
+  width: 60%;
+}
+
+.card h1 {
+  font-size: 2em;
+}
+
+.card h2 {
+  font-size: 1.5em;
+  padding-top: 10%;
+}
+
+.card h3 {
+  font-size: .75em;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top:8%;
+}
+
+i {
+  padding-top: 5%;
+}
+
+h2 {
+  font-size: 2.5em;
+}
+
+h3 {
+  font-size: 1.5em;
+  padding-bottom: 5%;
+}
 }
 
