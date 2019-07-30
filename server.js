@@ -150,10 +150,17 @@ function getDistances( request, response ){
       let url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${request.body.lat},${request.body.long}&destinations=${request.body.url}&key=${process.env.GEOCODE_API_KEY}`;
       return superagent.get(url)
         .then( results => {
-          
-          response.send(results.body.rows[0].elements.map(element => element.distance.text))
-        });
-    })
-    .catch( error => console.log( error, 'getDistances' ) );
+          console.log(results.body.rows[0].elements);
+          //coding around lat/long issue in
+          response.send(results.body.rows[0].elements.map(element => {
+            if(element.status === 'OK') {
+              return element.distance.text;
+            } else {
+              return element.status;
+            }
+          })
+          );
+        })
+        .catch( error => console.log( error, 'getDistances' ) );
+    }).catch( error => console.log( error, 'getDistances' ) );
 }
-
