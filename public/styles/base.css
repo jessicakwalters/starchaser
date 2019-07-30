@@ -1,3 +1,6 @@
+
+@media all and (min-width: 200px) {
+
 * {
   font-family: 'Dosis', sans-serif;
   /* font-family: 'Rock Salt', cursive; */
@@ -5,8 +8,9 @@
 }
 
 body {
-  width: 100%;
-  background-image: url('../assets/night-sky.jpg');
+  width: 110%;
+  /* background-size: cover; */
+  background-image: url('../assets/starry-night-cropped-vertical.jpg');
   background-repeat: no-repeat;
 }
 
@@ -17,7 +21,7 @@ ul {
   align-items: center;
   padding-left: 4%;
   padding-right: 4%;
-  padding-top: 4%;
+  padding-top: 2%;
 }
 
 nav {
@@ -70,3 +74,7 @@ input[type=text] {
 input:focus {
   outline: none;
 }
+
+
+}
+
