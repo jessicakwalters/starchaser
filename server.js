@@ -60,14 +60,14 @@ app.get('/parks', (request, response) => {
   try {
     const parkData = require('./data/dark_parks.json');
 
-    const newcrap = parkData.map(parkObj => {
+    const newData = parkData.map(parkObj => {
 
       const park = new Park(parkObj);
       park.save();
 
     })
 
-    response.send(newcrap);
+    response.send(newData);
   }
   catch (error) {
     response.status(400).send({'error': error});
