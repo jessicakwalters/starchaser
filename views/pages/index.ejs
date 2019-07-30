@@ -4,12 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/modules.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Rock+Salt&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
+
 <body>
-    <form action="/" method="POST">
-      <input type="text" name="search" required>
-      <button type="submit">Submit</button>
+  <nav>
+    <ul>
+      <div class="logo-container">
+      <li><i class="fas fa-meteor fa-2x"></i></li>
+      <li class="logo-title">StarChaser</li>
+      </div>
+      <li><i class="fas fa-bars fa-2x"></i></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="flex">
+    <form class="location-form" action="/" method="POST">
+      <input type="text" name="search" placeholder="Where are you?" required>
+      <button class="hide" type="submit">Submit</button>
     </form>
+    </div>
+  </main>
+
+  <footer>
+  
+  </footer>
+    
 </body>
 </html>
