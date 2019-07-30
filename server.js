@@ -108,7 +108,6 @@ function getWeather( request, response, next ){
         newDay.moonPhase = day.moonPhase;
         return newDay;
       })
-      console.log('hello from weather!', request.body);
       next();
     }).catch( error => console.log( error ) );
 }
@@ -126,7 +125,7 @@ function createDistanceURL( request ){
         console.log( 'no parks?' )
       } else {
         let url = '';
-        results.rows.map( park => {
+        request.body.parkData.locations = results.rows.map( park => {
           if( url.length ){
             url += '|';
           }
@@ -137,30 +136,72 @@ function createDistanceURL( request ){
           return newPark;
         });
         request.body.parkData.url = url;
-        console.log(request.body);
         return request;
       }
-    })
-    .catch( error => console.log( error, 'Database query from createURL!' ) );
+    }).catch( error => console.log( error, 'Database query from createURL!' ) );
 }
 
 function getDistances( request, response ){
   createDistanceURL( request )
     .then( request => {
-      let url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${request.body.lat},${request.body.long}&destinations=${request.body.url}&key=${process.env.GEOCODE_API_KEY}`;
+      // console.log(request.body);
+      let url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${request.body.lat},${request.body.long}&destinations=${request.body.parkData.url}&key=${process.env.GEOCODE_API_KEY}`;
       return superagent.get(url)
         .then( results => {
-          console.log(results.body.rows[0].elements);
-          //coding around lat/long issue in
-          response.send(results.body.rows[0].elements.map(element => {
-            if(element.status === 'OK') {
-              return element.distance.text;
+          results.body.rows[0].elements.forEach( (destination, index) => {
+            if(destination.status === 'OK') {
+              request.body.parkData.locations[index].distance = destination.distance.value;
             } else {
-              return element.status;
+              request.body.parkData.locations[index].distance = destination.status;
             }
           })
-          );
-        })
-        .catch( error => console.log( error, 'getDistances' ) );
+          request.body.parkData.locations.filter( destination => typeof(destination.distance) === 'number' );
+          sortByDistance( request.body.parkData.locations );
+          request.body.parkData.locations.splice(3);
+          const promises = [];
+          request.body.parkData.locations.forEach(location => {
+            promises.push(fetchParkDetails(location))
+          })
+          Promise.all(promises)
+            .then( parkDetails => {
+              request.body.parkData.locations = parkDetails;
+              response.send(request.body);
+            }).catch( err => console.log( err, 'getDistances-Promise.all') )
+        }).catch( error => console.log( error, 'getDistances-createDistanceURL' ) );
     }).catch( error => console.log( error, 'getDistances' ) );
+}
+
+function sortByDistance( locations ){
+  locations.sort( (a,b) => {
+    return a.distance - b.distance;
+  })
+}
+
+// function bulkPromises(data, handler) {
+//   const result = [];
+//   const promises = [];
+//   data.forEach(item => {
+//     promises.push(handler(item));
+//   })
+//   Promise.all(promises)
+//     .then(res => {
+//       result.push(res);
+//     })
+//     .catch(err => console.log(err))
+//   return result
+// }
+
+function fetchParkDetails(park) {
+  let SQL = `SELECT * FROM dark_parks WHERE id=${park.id};`;
+  return client.query(SQL)
+    .then( Result => {
+      if ( Result.rowCount > 0 ){
+        park.lat = Result.rows[0].lat;
+        park.long = Result.rows[0].long;
+        park.img_url = Result.rows[0].img_url;
+        park.learn_more_url = Result.rows[0].learn_more_url;
+        // console.log('this is from fetchParkDetails', park);
+        return park;
+      }
+    }).catch( error => console.log( error, 'fetchParkDetails' ) );
 }
