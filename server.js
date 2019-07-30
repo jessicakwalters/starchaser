@@ -11,6 +11,7 @@ require('dotenv').config();
 // Application Setup
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 const client = new pg.Client(process.env.DATABASE_URL)
 client.connect();
 client.on('err', err => console.log(err));
@@ -21,12 +22,6 @@ client.on('err', err => console.log(err));
 app.use(express.urlencoded({ extended: true }));
 // Specify a directory for static resources
 app.use(express.static('./public'));
-
-// Database Setup: if you've got a good DATABASE_URL
-
-  const client = new pg.Client(process.env.DATABASE_URL);
-  client.connect();
-  client.on('error', err => console.error(err));
 
 
 // Set the view engine for server-side templating
