@@ -11,6 +11,7 @@ require('dotenv').config();
 // Application Setup
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 const client = new pg.Client(process.env.DATABASE_URL)
 client.connect();
 client.on('err', err => console.log(err));
@@ -22,12 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 // Specify a directory for static resources
 app.use(express.static('./public'));
 
-// Database Setup: if you've got a good DATABASE_URL
-if (process.env.DATABASE_URL) {
-  const client = new pg.Client(process.env.DATABASE_URL);
-  client.connect();
-  client.on('error', err => console.error(err));
-}
 
 // Set the view engine for server-side templating
 app.set( 'view engine', 'ejs' );
@@ -41,8 +36,9 @@ app.get('/', (request, response) => {
   response.render('pages/index');
 });
 
-app.post('/', getLatLong)
+app.post('/', getLatLong, getWeather, getDistances)
 // app.get('/')
+
 
 //Populate database table with dark_parks json data
 
@@ -64,7 +60,7 @@ app.get('/parks', (request, response) => {
 
       const park = new Park(parkObj);
       park.save();
-
+      return park;
     })
 
     response.send(newData);
@@ -83,7 +79,8 @@ Park.prototype.save = function() {
 };
 
 
-function getLatLong(request, response) {
+function getLatLong(request, response, next) {
+
   let url= `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.search}&key=${process.env.GEOCODE_API_KEY}`;
 
   return superagent.get(url)
@@ -91,14 +88,13 @@ function getLatLong(request, response) {
       request.body.formatted_address = rawData.body.results[0].formatted_address;
       request.body.lat = rawData.body.results[0].geometry.location.lat;
       request.body.long = rawData.body.results[0].geometry.location.lng;
-      // response.send(request.body);
-      getWeather ( request, response );
+      next();
     })
     .catch( error => console.log( error ) );
 
 }
 
-function getWeather( request, response ){
+function getWeather( request, response, next ){
 
   const url = `https://api.darksky.net/forecast/${process.env.WEATHER_API_KEY}/${request.body.lat},${request.body.long}`;
 
@@ -113,6 +109,45 @@ function getWeather( request, response ){
         return newDay;
       })
       console.log('hello from weather!', request.body);
-      response.send( request.body );
+      next();
     }).catch( error => console.log( error ) );
 }
+
+
+function createDistanceURL( request ){
+
+  let SQL = 'SELECT * FROM dark_parks;';
+
+  return client.query(SQL)
+    .then( results => {
+      if( results.rowCount === 0 ){
+        console.log( 'no parks?' )
+      } else {
+        let url = '';
+        results.rows.forEach( park => {
+          // request.body.id = park.id;
+          if( url.length ){
+            url += '|';
+          }
+          url += park.lat + ',' + park.long;
+        });
+        request.body.url = url;
+        return request;
+      }
+    })
+    .catch( error => console.log( error, 'Database query from createURL!' ) );
+}
+
+function getDistances( request, response ){
+  createDistanceURL( request )
+    .then( request => {
+      let url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${request.body.lat},${request.body.long}&destinations=${request.body.url}&key=${process.env.GEOCODE_API_KEY}`;
+      return superagent.get(url)
+        .then( results => {
+          
+          response.send(results.body.rows[0].elements.map(element => element.distance.text))
+        });
+    })
+    .catch( error => console.log( error, 'getDistances' ) );
+}
+
