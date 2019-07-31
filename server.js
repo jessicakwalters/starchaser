@@ -269,7 +269,7 @@ function getOutlook (moonphase, weather) {
   if ((goodWeather.includes(weather)) && (moonphase === 'new-moon')) {
     return 'ideal';
   }
-  else if ((goodWeather.includes(weather)) && (crescentMoon.includes(moonphase))) {
+  else if ((goodWeather.includes(weather)) && (moonphase !== 'new-moon')) {
     return 'go'
   }
   else if (mehWeather.includes(weather)) {
@@ -277,5 +277,8 @@ function getOutlook (moonphase, weather) {
   }
   else if (notIdealWeather.includes(weather)) {
     return 'no-go';
+  }
+  else {
+    return 'meh';
   }
 }
