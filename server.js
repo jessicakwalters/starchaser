@@ -39,7 +39,17 @@ app.get('/', (request, response) => {
 
 app.get('/results', (request, response) => {
   response.render('pages/results');
-})
+});
+
+app.get('/about', (request, response) => {
+  response.render('pages/about');
+});
+
+app.get('/new', (request, response) => {
+  response.render('pages/new');
+});
+
+app.post('/new', getLatLong, createNewPark)
 
 app.post('/', getLatLong, getDistances, addWeatherData)
 
@@ -90,6 +100,7 @@ function getLatLong(request, response, next) {
 
   return superagent.get(url)
     .then( rawData => {
+      request.body.location_name = rawData.body.results[0].address_components[2].long_name;
       request.body.formatted_address = rawData.body.results[0].formatted_address;
       request.body.lat = rawData.body.results[0].geometry.location.lat;
       request.body.long = rawData.body.results[0].geometry.location.lng;
@@ -212,6 +223,7 @@ function getWeatherData( park ){
         newDay.summary = day.summary;
         newDay.icon = day.icon;
         newDay.moonPhase = getPhaseName(day.moonPhase);
+        newDay.outlook = getOutlook(newDay.moonPhase, newDay.icon);
         return newDay;
       });
     }).catch( error => console.log( error ) );
@@ -269,3 +281,42 @@ function getPark (request, response) {
     })
 }
 
+function getOutlook (moonphase, weather) {
+
+  let goodWeather = ['clear-day', 'clear-night'];
+  let mehWeather = ['wind', 'partly-cloudy-day', 'partly-cloudy-night'];
+  let notIdealWeather = ['rain', 'snow', 'sleet', 'cloudy', 'fog'];
+
+  let crescentMoon = ['waxing-crescent', 'waning-crescent'];
+
+  if ((goodWeather.includes(weather)) && (moonphase === 'new-moon')) {
+    return 'ideal';
+  }
+  else if ((goodWeather.includes(weather)) && (moonphase !== 'new-moon')) {
+    return 'go'
+  }
+  else if (mehWeather.includes(weather)) {
+    return 'meh';
+  }
+  else if (notIdealWeather.includes(weather)) {
+    return 'no-go';
+  }
+  else {
+    return 'meh';
+  }
+}
+
+function createNewPark (request, response) {
+  console.log(request.body);
+  let newParkObj = {};
+  newParkObj.park_name = request.body.search;
+  newParkObj.location_name = request.body.location_name;
+  newParkObj.lat = request.body.lat;
+  newParkObj.long = request.body.long;
+  newParkObj.img_url = request.body.img_url;
+  newParkObj.learn_more_url = request.body.learn_more_url;
+  let newPark = new Park(newParkObj);
+  newPark.save();
+  console.log(newPark);
+  response.send(newPark);
+}

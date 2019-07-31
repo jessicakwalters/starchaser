@@ -6,13 +6,16 @@
       <section class="flex-row">
         <div class="flex <%= data.parkData.locations[0].forecasts[idx].moonPhase %>">
           <h3>Moonphase</h3>
+          <%# data.parkData.locations[0].forecasts[idx].moonPhase %>
+
           <!-- <i class="fas fa-moon fa-2x"></i> -->
         </div>
-        <div class="flex <%= data.parkData.locations[0].forecasts[idx].icon %>">
-          <h3>Weather</h3>
-          
+        <div class="flex weather-icon <%= data.parkData.locations[0].forecasts[idx].icon %>">
+          <h3>Weather</h3>          
         </div>
       </section>
-      <div class="flex"><h2>Outlook</h2><i class="fas fa-meh fa-2x"></i><p>meh</p></div>
+        <div class="flex <%= data.parkData.locations[0].forecasts[idx].outlook %>">
+          <h2>Outlook</h2>
+        </div>      
     </div>
   </section>
