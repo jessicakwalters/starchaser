@@ -208,8 +208,8 @@ function addWeatherData( request, response ){
       request.body.parkData.locations.forEach( ( park, index ) => {
         park.forecasts = forecasts[index];
       });
-      console.log(request.body);
-      response.send(request.body);
+      console.log(request.body.parkData.locations[0].forecasts);
+      response.render('pages/results', {data: request.body});
     }).catch( err => console.log( err, 'getDistances-Promise.all') )
 
 }
@@ -225,8 +225,31 @@ function getWeatherData( park ){
         newDay.time = day.time;
         newDay.summary = day.summary;
         newDay.icon = day.icon;
-        newDay.moonPhase = day.moonPhase;
+        newDay.moonPhase = getPhaseName(day.moonPhase);
         return newDay;
       });
     }).catch( error => console.log( error ) );
+}
+
+function getPhaseName(phase) {
+  switch(true) {
+  case (phase < .125):
+    return 'new-moon';
+  // case (phase < .25):
+  //   return 'waxing-crescent';
+  case (phase < .375):
+    return 'first-quarter';
+  // case (phase < .49):
+  //   return 'waxing-gibbous';
+  case (phase < .52):
+    return 'full-moon';
+  // case (phase < .75):
+  //   return 'waning-gibbous';
+  case (phase < .875):
+    return 'last-quarter';
+  // case (phase < .100):
+  //   return 'waning-crescent';
+  case (phase < 1.00):
+    return 'new-moon';
+  }
 }
