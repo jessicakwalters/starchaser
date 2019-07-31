@@ -52,9 +52,6 @@ app.get('/results', (request, response) => {
 
 app.get('/about', (request, response) => {
   response.render('pages/about');
-<<<<<<< HEAD
-})
-=======
 });
 
 app.get('/new', (request, response) => {
@@ -62,7 +59,6 @@ app.get('/new', (request, response) => {
 });
 
 app.post('/new', getLatLong, createNewPark)
->>>>>>> b1daafa81abb1b8d85386b7569a0cd885ed67783
 
 app.post('/', getLatLong, getDistances, addWeatherData)
 
