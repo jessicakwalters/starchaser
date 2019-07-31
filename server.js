@@ -4,6 +4,7 @@
 const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
+const methodOverride = require('method-override')
 
 // Environment variables
 require('dotenv').config();
@@ -22,7 +23,15 @@ client.on('err', err => console.log(err));
 app.use(express.urlencoded({ extended: true }));
 // Specify a directory for static resources
 app.use(express.static('./public'));
-
+// Do method override for delete function
+app.use(methodOverride((request, response) => {
+  if(request.body && typeof request.body === 'object' && '_method' in request.body) {
+    let method = request.body._method;
+    console.log(method);
+    delete request.body._method;
+    return method;
+  }
+}));
 
 // Set the view engine for server-side templating
 app.set( 'view engine', 'ejs' );
@@ -39,13 +48,27 @@ app.get('/', (request, response) => {
 
 app.get('/results', (request, response) => {
   response.render('pages/results');
-})
+});
 
 app.get('/about', (request, response) => {
   response.render('pages/about');
+<<<<<<< HEAD
 })
+=======
+});
+
+app.get('/new', (request, response) => {
+  response.render('pages/new');
+});
+
+app.post('/new', getLatLong, createNewPark)
+>>>>>>> b1daafa81abb1b8d85386b7569a0cd885ed67783
 
 app.post('/', getLatLong, getDistances, addWeatherData)
+
+app.get('/parks', getPark)
+
+app.delete('/parks', deletePark);
 
 //Populate database table with dark_parks json data
 
@@ -92,6 +115,7 @@ function getLatLong(request, response, next) {
 
   return superagent.get(url)
     .then( rawData => {
+      request.body.location_name = rawData.body.results[0].address_components[2].long_name;
       request.body.formatted_address = rawData.body.results[0].formatted_address;
       request.body.lat = rawData.body.results[0].geometry.location.lat;
       request.body.long = rawData.body.results[0].geometry.location.lng;
@@ -259,6 +283,19 @@ function seedDatabase () {
     }).catch( err => console.log( err, 'getDistances-Promise.all') )
 }
 
+function getPark (request, response) {
+  let SQL = `SELECT * FROM dark_parks;`;
+
+  client.query(SQL)
+    .then(results => {
+      if(results.rowCount === 0) {
+        response.send('No park matches.');
+      } else {
+        response.render('pages/allparks', {data : results.rows});
+      }
+    })
+}
+
 function getOutlook (moonphase, weather) {
 
   let goodWeather = ['clear-day', 'clear-night'];
@@ -282,4 +319,29 @@ function getOutlook (moonphase, weather) {
   else {
     return 'meh';
   }
+}
+
+function createNewPark (request, response) {
+  console.log(request.body);
+  let newParkObj = {};
+  newParkObj.park_name = request.body.search;
+  newParkObj.location_name = request.body.location_name;
+  newParkObj.lat = request.body.lat;
+  newParkObj.long = request.body.long;
+  newParkObj.img_url = request.body.img_url;
+  newParkObj.learn_more_url = request.body.learn_more_url;
+  let newPark = new Park(newParkObj);
+  newPark.save();
+  console.log(newPark);
+  response.send(newPark);
+}
+
+function deletePark (request, response) {
+  let SQL = `DELETE FROM dark_parks WHERE id = $1;`;
+  let values = [request.body.id];
+
+  client.query(SQL, values)
+    .then( results => {
+      response.redirect('/parks');
+    }).catch(error => console.log(error));
 }

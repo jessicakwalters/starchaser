@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs'); %>
+
+<body>
+  <%- include('../partials/header.ejs'); %>
+  <main>
+    <div class="flex card person new-park">
+    <form action="/new" method="POST">
+      <label for="park-name">
+        <input id="park-name" type="text" name="search" placeholder="Park Name" required>
+      </label>
+      <label for="image_url">
+        <input id="image_url" type="text" name="img_url" placeholder="Image URL" required>
+      </label>
+      <label for="park_url">
+        <input id="park_url" type="text" name="learn_more_url" placeholder="Park Info URL">
+      </label>
+      <button class="add-button" type="submit">Add New Park</button>
+    </form>
+    </div>
+  </main>
+
+
+  <footer>
+  
+  </footer>
+
+    
+</body>
+</html>

@@ -1,0 +1,15 @@
+<div>
+      <% data.forEach( park => { %>
+      <form action="/parks" id="<%= park.id %>" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="id" value="<%= park.id %>">
+          <p><%= park.park_name %></p>
+          <p><%= park.location_name %></p>
+          <div>
+            <img src="<%= park.img_url %>">
+          </div>
+          <a href="<%= park.learn_more_url %>">Learn More</a>
+          <button type="submit">Delete Park</button>
+      </form>
+<% }) %>
+    </div>

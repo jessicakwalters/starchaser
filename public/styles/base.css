@@ -28,8 +28,11 @@
 
   nav {
     width: 100%;
-    background-color: #090D0D;
+    background-color: rgb(9,13,13, .35);
+    /* background-color: transparent; */
+    border-bottom: solid .1em rgb(255, 255, 255, .3);
     color: #F5F1F1;
+    /* font-weight: bold; */
     position: absolute;
     left: 0;
     top: 0;
@@ -95,12 +98,13 @@
   .card {
     background-color: #090D0D;
     opacity: .7;
-    padding: 0 5% 5% 5%;
+    padding: 7% 3%;
     border-radius: 5%;
     box-shadow: 0px 0px 7px #A2A3B1;
     font-size: 2em;
     text-align: center;
     width: 60%;
+    margin-top: 10%;
   }
 
   .card h1 {
@@ -109,7 +113,7 @@
 
   .card h2 {
     font-size: 1.5em;
-    padding-top: 10%;
+    /* padding-top: 2%; */
   }
 
   .card h3 {
@@ -139,6 +143,10 @@
   img {
     fill: #F5F1F1;
   }
+
+  .weather-icon > i{
+    margin-bottom: 60%;
+  } 
   .team{
     margin-top: 40%;
   }
@@ -169,5 +177,34 @@
   .description > p {
     font-size: 50%;
   }
+  .new-park {
+    margin-top: 40%;
+    height:30%;
+    margin-top:40%;
+    font-size: 60%;
+    width: 70%;
+    margin-top: 60%;
+    margin-left: auto;
+  }
+
+  .add-button{
+    margin-top: 10%;
+    background-color: #090D0D;
+    box-shadow: 0px 0px 7px #A2A3B1;
+    color:white;
+    padding: 1%;
+    width:80%;
+    font-size: 250%;
+  }
+  #park-name{
+    margin-bottom: 5%;
+  }
+  #image_url{
+    margin-bottom: 5%;
+  }
+  #park_url{
+    margin-bottom: 5%;
+  }
+
 }
 
