@@ -43,6 +43,8 @@ app.get('/results', (request, response) => {
 
 app.post('/', getLatLong, getDistances, addWeatherData)
 
+app.get('/parks', getPark)
+
 //Populate database table with dark_parks json data
 
 function Park(parkData) {
@@ -253,3 +255,17 @@ function seedDatabase () {
       }
     }).catch( err => console.log( err, 'getDistances-Promise.all') )
 }
+
+function getPark (request, response) {
+  let SQL = `SELECT * FROM dark_parks;`;
+
+  client.query(SQL)
+    .then(results => {
+      if(results.rowCount === 0) {
+        response.send('No park matches.');
+      } else {
+        response.send(results.rows);
+      }
+    })
+}
+
