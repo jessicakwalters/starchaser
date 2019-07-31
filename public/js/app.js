@@ -14,9 +14,15 @@ $('.partly-cloudy-day').append('<i class="fas fa-cloud-sun fa-2x"></i>');
 $('.partly-cloudy-night').append('<i class="fas fa-cloud-moon fa-2x"></i>');
 
 $('.new-moon').append('<img src="assets/svg/wi-moon-new.svg">');
+$('.test').append('<img src="assets/svg/wi-moon-waning-crescent-3.svg">');
 $('.first-quarter').append('<img src="assets/svg/wi-moon-first-quarter.svg">');
 $('.full-moon').append('<img src="assets/svg/wi-moon-full.svg">');
 $('.last-quarter').append('<img src="assets/svg/wi-moon-third-quarter.svg">');
+$('.waxing-gibbous').append('<img src="assets/svg/wi-moon-waxing-gibbous-3.svg">');
+$('.waxing-crescent').append('<img src="assets/svg/wi-moon-waxing-crescent-3.svg">');
+$('.waning-gibbous').append('<img src="assets/svg/wi-moon-waning-gibbous-3.svg">');
+$('.waning-crescent').append('<img src="assets/svg/wi-moon-waning-crescent-3.svg">');
+
 
 
 
