@@ -44,6 +44,7 @@ app.get('/results', (request, response) => {
 app.get('/about', (request, response) => {
   response.render('pages/about');
 })
+
 app.post('/', getLatLong, getDistances, addWeatherData)
 
 //Populate database table with dark_parks json data
