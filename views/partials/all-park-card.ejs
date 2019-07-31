@@ -1,15 +1,19 @@
-<div>
-      <% data.forEach( park => { %>
-      <form action="/parks" id="<%= park.id %>" method="POST">
-        <input type="hidden" name="_method" value="DELETE">
-        <input type="hidden" name="id" value="<%= park.id %>">
-          <p><%= park.park_name %></p>
-          <p><%= park.location_name %></p>
-          <div>
-            <img src="<%= park.img_url %>">
-          </div>
-          <a href="<%= park.learn_more_url %>">Learn More</a>
-          <button type="submit">Delete Park</button>
-      </form>
-<% }) %>
-    </div>
+<div class="all-park-card">
+  <% data.forEach( park => { %>
+  <form action="/parks" id="<%= park.id %>" method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="id" value="<%= park.id %>">
+      <div class="park-title">
+        <h1><%= park.park_name %></h1>
+        <h2><%= park.location_name %></h2>
+      </div>
+      <div>
+        <img src="<%= park.img_url %>">
+      </div>
+      <div class="learn-delete">
+        <button type="submit">Delete Park</button>
+        <a href="<%= park.learn_more_url %>">Learn More</a>
+      </div>
+  </form>
+  <% }) %>
+</div>
