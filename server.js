@@ -210,6 +210,7 @@ function getWeatherData( park ){
         newDay.summary = day.summary;
         newDay.icon = day.icon;
         newDay.moonPhase = getPhaseName(day.moonPhase);
+        newDay.outlook = getOutlook(newDay.moonPhase, newDay.icon);
         return newDay;
       });
     }).catch( error => console.log( error ) );
@@ -252,4 +253,26 @@ function seedDatabase () {
         });
       }
     }).catch( err => console.log( err, 'getDistances-Promise.all') )
+}
+
+function getOutlook (moonphase, weather) {
+
+  let goodWeather = ['clear-day', 'clear-night'];
+  let mehWeather = ['wind', 'partly-cloudy-day', 'partly-cloudy-night'];
+  let notIdealWeather = ['rain', 'snow', 'sleet', 'cloudy', 'fog'];
+
+  let crescentMoon = ['waxing-crescent', 'waning-crescent'];
+
+  if ((goodWeather.includes(weather)) && (moonphase === 'new-moon')) {
+    return 'ideal';
+  }
+  else if ((goodWeather.includes(weather)) && (crescentMoon.includes(moonphase))) {
+    return 'go'
+  }
+  else if (mehWeather.includes(weather)) {
+    return 'meh';
+  }
+  else if (notIdealWeather.includes(weather)) {
+    return 'no-go';
+  }
 }
