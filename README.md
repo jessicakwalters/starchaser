@@ -1,5 +1,6 @@
 # starchaser
 A Dark Spot finder for those who love the stars.
+
 # Authors
 
 Eric Huang
@@ -16,4 +17,7 @@ Starchaser is a mobile-first web-application designed for people who enjoy star-
 
 #How it works
 
-1. Starchaser recieves the location name from the user and sends the data to the Google Geocode API. It then recieves the latitude and longitude for the location from the Geocode API and sends the data to 
+1. Starchaser recieves the location name from the user and sends the data to the Google Geocode API. 
+2. It then recieves the latitude and longitude for the location from the Geocode API and sends the data to the Wheather API to get the weather and moonphase info for each park.
+3. Then, the app sends the user's location, and the latitude and longitude of the parks to a different Google API(Distance Metrix API) to compare the distance of each park to the user. After it gets the distances it sorts them from nearest to farthest and displays the nearest three parks.
+
