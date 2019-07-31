@@ -4,6 +4,7 @@
 const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
+const methodOverride = require('method-override')
 
 // Environment variables
 require('dotenv').config();
@@ -22,7 +23,15 @@ client.on('err', err => console.log(err));
 app.use(express.urlencoded({ extended: true }));
 // Specify a directory for static resources
 app.use(express.static('./public'));
-
+// Do method override for delete function
+app.use(methodOverride((request, response) => {
+  if(request.body && typeof request.body === 'object' && '_method' in request.body) {
+    let method = request.body._method;
+    console.log(method);
+    delete request.body._method;
+    return method;
+  }
+}));
 
 // Set the view engine for server-side templating
 app.set( 'view engine', 'ejs' );
@@ -52,6 +61,10 @@ app.get('/new', (request, response) => {
 app.post('/new', getLatLong, createNewPark)
 
 app.post('/', getLatLong, getDistances, addWeatherData)
+
+app.get('/parks', getPark)
+
+app.delete('/parks', deletePark);
 
 //Populate database table with dark_parks json data
 
@@ -266,6 +279,19 @@ function seedDatabase () {
     }).catch( err => console.log( err, 'getDistances-Promise.all') )
 }
 
+function getPark (request, response) {
+  let SQL = `SELECT * FROM dark_parks;`;
+
+  client.query(SQL)
+    .then(results => {
+      if(results.rowCount === 0) {
+        response.send('No park matches.');
+      } else {
+        response.render('pages/allparks', {data : results.rows});
+      }
+    })
+}
+
 function getOutlook (moonphase, weather) {
 
   let goodWeather = ['clear-day', 'clear-night'];
@@ -304,4 +330,14 @@ function createNewPark (request, response) {
   newPark.save();
   console.log(newPark);
   response.send(newPark);
+}
+
+function deletePark (request, response) {
+  let SQL = `DELETE FROM dark_parks WHERE id = $1;`;
+  let values = [request.body.id];
+
+  client.query(SQL, values)
+    .then( results => {
+      response.redirect('/parks');
+    }).catch(error => console.log(error));
 }
