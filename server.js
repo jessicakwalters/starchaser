@@ -297,9 +297,7 @@ function getOutlook (moonphase, weather) {
   let goodWeather = ['clear-day', 'clear-night'];
   let mehWeather = ['wind', 'partly-cloudy-day', 'partly-cloudy-night'];
   let notIdealWeather = ['rain', 'snow', 'sleet', 'cloudy', 'fog'];
-
-  let crescentMoon = ['waxing-crescent', 'waning-crescent'];
-
+  
   if ((goodWeather.includes(weather)) && (moonphase === 'new-moon')) {
     return 'ideal';
   }
