@@ -1,6 +1,5 @@
-$( document ).ready();
-
-
+$(document).ready();
+$('.fa-times').hide();
 
 $('.clear-day').append('<i class="fas fa-sun fa-2x"></i>');
 $('.clear-night').append('<i class="fas fa-moon fa-2x"></i>');
@@ -28,6 +27,22 @@ $('.go').append('<i class="fas fa-smile fa-2x"></i>');
 $('.meh').append('<i class="fas fa-meh fa-2x"></i>');
 $('.no-go').append('<i class="fas fa-frown fa-2x"></i>');
 
+
+$('.fa-bars').on('click', event => {
+  $('.fa-bars').hide();
+  $('#menu').toggleClass('hide');
+  $('.fa-times').show();
+  $('nav').css('background-color', 'rgb(9,13,13, .9)');
+  event.preventDefault();
+});
+
+$('.fa-times').on('click', event => {
+    $('.fa-times').hide();
+    $('#menu').toggleClass('hide');
+    $('nav').css('background-color', 'rgb(9,13,13, .35)');
+    $('.fa-bars').show();
+    event.preventDefault();
+  });
 
 
 
