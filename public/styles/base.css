@@ -191,7 +191,36 @@
     padding-top: 5%;
     padding-bottom: 5%;
   }
-}
+
+  .new-park {
+    margin-top: 40%;
+    height:30%;
+    margin-top:40%;
+    font-size: 60%;
+    width: 70%;
+    margin-top: 60%;
+    margin-left: auto;
+  }
+
+  .add-button{
+    margin-top: 10%;
+    background-color: #090D0D;
+    box-shadow: 0px 0px 7px #A2A3B1;
+    color:white;
+    padding: 1%;
+    width:80%;
+    font-size: 250%;
+  }
+  #park-name{
+    margin-bottom: 5%;
+  }
+  #image_url{
+    margin-bottom: 5%;
+  }
+  #park_url{
+    margin-bottom: 5%;
+  }
+
 
 #menu li:hover {
   background-color: #231823;
