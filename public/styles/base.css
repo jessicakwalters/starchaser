@@ -177,6 +177,21 @@
   .description > p {
     font-size: 50%;
   }
+
+  a{
+    text-decoration: none;
+    color: #F5F1F1;
+    font-size: 1.5em;
+    padding-top: 2%;
+    padding-bottom: 2%;
+  }
+  #menu li {
+    text-align: center;
+    width: 100%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+
   .new-park {
     margin-top: 40%;
     height:30%;
@@ -206,5 +221,8 @@
     margin-bottom: 5%;
   }
 
-}
 
+#menu li:hover {
+  background-color: #231823;
+  
+}
