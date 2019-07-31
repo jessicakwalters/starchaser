@@ -39,11 +39,18 @@ app.get('/', (request, response) => {
 
 app.get('/results', (request, response) => {
   response.render('pages/results');
-})
+});
 
 app.get('/about', (request, response) => {
   response.render('pages/about');
-})
+});
+
+app.get('/new', (request, response) => {
+  response.render('pages/new');
+});
+
+app.post('/new', getLatLong, createNewPark)
+
 app.post('/', getLatLong, getDistances, addWeatherData)
 
 //Populate database table with dark_parks json data
@@ -91,6 +98,7 @@ function getLatLong(request, response, next) {
 
   return superagent.get(url)
     .then( rawData => {
+      request.body.location_name = rawData.body.results[0].address_components[2].long_name;
       request.body.formatted_address = rawData.body.results[0].formatted_address;
       request.body.lat = rawData.body.results[0].geometry.location.lat;
       request.body.long = rawData.body.results[0].geometry.location.lng;
@@ -281,4 +289,19 @@ function getOutlook (moonphase, weather) {
   else {
     return 'meh';
   }
+}
+
+function createNewPark (request, response) {
+  console.log(request.body);
+  let newParkObj = {};
+  newParkObj.park_name = request.body.search;
+  newParkObj.location_name = request.body.location_name;
+  newParkObj.lat = request.body.lat;
+  newParkObj.long = request.body.long;
+  newParkObj.img_url = request.body.img_url;
+  newParkObj.learn_more_url = request.body.learn_more_url;
+  let newPark = new Park(newParkObj);
+  newPark.save();
+  console.log(newPark);
+  response.send(newPark);
 }
