@@ -28,7 +28,9 @@ app.use(express.static('./public'));
 app.set( 'view engine', 'ejs' );
 
 // listen for requests
-app.listen( PORT, () => console.log( 'Listening on port:', PORT ) );
+app.listen( PORT, () => {
+  seedDatabase()
+  console.log( 'Listening on port:', PORT ) });
 
 // API Routes
 app.get('/', (request, response) => {
@@ -53,23 +55,23 @@ function Park(parkData) {
   this.idsa_desig = parkData.idsa_desig;
 }
 
-app.get('/parks', (request, response) => {
-  try {
-    const parkData = require('./data/dark_parks.json');
+// app.get('/parks', (request, response) => {
+//   try {
+//     const parkData = require('./data/dark_parks.json');
 
-    const newData = parkData.map(parkObj => {
+//     const newData = parkData.map(parkObj => {
 
-      const park = new Park(parkObj);
-      park.save();
-      return park;
-    })
+//       const park = new Park(parkObj);
+//       park.save();
+//       return park;
+//     })
 
-    response.send(newData);
-  }
-  catch (error) {
-    response.status(400).send({'error': error});
-  }
-});
+//     response.send(newData);
+//   }
+//   catch (error) {
+//     response.status(400).send({'error': error});
+//   }
+// });
 
 Park.prototype.save = function() {
   let SQL = `INSERT INTO dark_parks (park_name, location_name, lat, long, img_url, learn_more_url, idsa_desig) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;`;
@@ -234,4 +236,22 @@ function getPhaseName(phase) {
   case (phase < 1.00):
     return 'new-moon';
   }
+}
+
+function seedDatabase () {
+  let SQL = `SELECT * FROM dark_parks;`;
+
+  client.query(SQL)
+    .then(results => {
+      if(results.rowCount === 0) {
+        const parkData = require('./data/dark_parks.json');
+
+        const newData = parkData.map(parkObj => {
+
+          const park = new Park(parkObj);
+          park.save();
+          return park;
+        });
+      }
+    }).catch( err => console.log( err, 'getDistances-Promise.all') )
 }
