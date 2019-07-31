@@ -32,7 +32,6 @@ app.listen( PORT, () => console.log( 'Listening on port:', PORT ) );
 
 // API Routes
 app.get('/', (request, response) => {
-  // test out your routes, perhaps ejs views or database stuff
   response.render('pages/index');
 });
 
@@ -41,8 +40,6 @@ app.get('/results', (request, response) => {
 })
 
 app.post('/', getLatLong, getDistances, addWeatherData)
-// app.get('/')
-
 
 //Populate database table with dark_parks json data
 
@@ -98,7 +95,7 @@ function getLatLong(request, response, next) {
 
 }
 
-function createDistanceURL( request ){
+function fetchAllParks( request ){
 
   request.body.parkData = {};
 
@@ -109,27 +106,28 @@ function createDistanceURL( request ){
       if( results.rowCount === 0 ){
         console.log( 'no parks?' )
       } else {
-        let url = '';
         request.body.parkData.locations = results.rows.map( park => {
-          if( url.length ){
-            url += '|';
-          }
-          url += park.lat + ',' + park.long;
           let newPark = {};
           newPark.id = park.id;
           newPark.park_name = park.park_name;
           return newPark;
         });
-        request.body.parkData.url = url;
+        request.body.parkData.url = createURL( results.rows );
         return request;
       }
     }).catch( error => console.log( error, 'Database query from createURL!' ) );
 }
 
+function createURL( queriedArray ){
+  return queriedArray.reduce( ( accumArr, park ) => {
+    accumArr.push(`${park.lat},${park.long}`);
+    return accumArr;
+  }, []).join('|');
+}
+
 function getDistances( request, response, next ){
-  createDistanceURL( request )
+  fetchAllParks( request )
     .then( request => {
-      // console.log(request.body);
       let url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${request.body.lat},${request.body.long}&destinations=${request.body.parkData.url}&key=${process.env.GEOCODE_API_KEY}`;
       return superagent.get(url)
         .then( results => {
@@ -140,15 +138,15 @@ function getDistances( request, response, next ){
               request.body.parkData.locations[index].distance = destination.status;
             }
           })
-          request.body.parkData.locations.filter( destination => typeof(destination.distance) === 'number' );
+          request.body.parkData.locations = request.body.parkData.locations.filter( destination => typeof(destination.distance) === 'number' );
           sortByDistance( request.body.parkData.locations );
           request.body.parkData.locations.splice(3);
 
           const promises = [];
 
           request.body.parkData.locations.forEach(location => {
-            promises.push(fetchParkDetails(location))
-          })
+            promises.push(fetchOnePark(location));
+          });
 
           Promise.all(promises)
             .then( parkDetails => {
@@ -165,21 +163,7 @@ function sortByDistance( locations ){
   })
 }
 
-// function bulkPromises(data, handler) {
-//   const result = [];
-//   const promises = [];
-//   data.forEach(item => {
-//     promises.push(handler(item));
-//   })
-//   Promise.all(promises)
-//     .then(res => {
-//       result.push(res);
-//     })
-//     .catch(err => console.log(err))
-//   return result
-// }
-
-function fetchParkDetails(park) {
+function fetchOnePark(park) {
   let SQL = `SELECT * FROM dark_parks WHERE id=${park.id};`;
   return client.query(SQL)
     .then( Result => {
@@ -188,10 +172,9 @@ function fetchParkDetails(park) {
         park.long = Result.rows[0].long;
         park.img_url = Result.rows[0].img_url;
         park.learn_more_url = Result.rows[0].learn_more_url;
-        // console.log('this is from fetchParkDetails', park);
         return park;
       }
-    }).catch( error => console.log( error, 'fetchParkDetails' ) );
+    }).catch( error => console.log( error, 'fetchOnePark' ) );
 }
 
 function addWeatherData( request, response ){
@@ -204,11 +187,9 @@ function addWeatherData( request, response ){
 
   Promise.all(promises)
     .then( forecasts => {
-      // console.log(forecasts);
       request.body.parkData.locations.forEach( ( park, index ) => {
         park.forecasts = forecasts[index];
       });
-      console.log(request.body);
       response.send(request.body);
     }).catch( err => console.log( err, 'getDistances-Promise.all') )
 
