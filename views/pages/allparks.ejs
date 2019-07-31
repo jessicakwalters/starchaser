@@ -6,12 +6,9 @@
 
   <main class="flex vertical-align">
     <section class="flex center">
-      <h3>StarChasing Outlook for:</h3>
-      <h2><%= data.parkData.locations[0].park_name %></h2>
+      <h2>All Parks</h2>
     </section>
-      <% data.parkData.locations[0].forecasts.forEach( (forecast, idx) => { %>
-        <%- include('../partials/cards.ejs', {idx: idx, forecast: forecast}); %>
-    <% }) %>
+    <%- include('../partials/all-park-card.ejs'); %>
   </main>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
