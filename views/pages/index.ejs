@@ -1,29 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/layout.css">
-    <link rel="stylesheet" href="styles/modules.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
-    <link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet"> 
-    <link href="https://fonts.googleapis.com/css?family=Rock+Salt&display=swap" rel="stylesheet">
-    <title>StarChaser</title>
-</head>
+<%- include('../partials/head.ejs'); %>
 
 <body>
-  <nav>
-    <ul>
-      <div class="logo-container">
-      <li><i class="fas fa-meteor fa-2x"></i></li>
-      <li class="logo-title">StarChaser</li>
-      </div>
-      <li><i class="fas fa-bars fa-2x"></i></li>
-    </ul>
-  </nav>
-
+  <%- include('../partials/header.ejs'); %>
   <main>
     <div class="flex">
     <form class="location-form" action="/" method="POST">
