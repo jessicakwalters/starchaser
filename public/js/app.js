@@ -23,6 +23,10 @@ $('.waxing-crescent').append('<img src="assets/svg/wi-moon-waxing-crescent-3.svg
 $('.waning-gibbous').append('<img src="assets/svg/wi-moon-waning-gibbous-3.svg">');
 $('.waning-crescent').append('<img src="assets/svg/wi-moon-waning-crescent-3.svg">');
 
+$('.ideal').append('<i class="fas fa-grin-stars fa-2x"></i>');
+$('.go').append('<i class="fas fa-smile fa-2x"></i>');
+$('.meh').append('<i class="fas fa-meh fa-2x"></i>');
+$('.no-go').append('<i class="fas fa-frown fa-2x"></i>');
 
 
 
