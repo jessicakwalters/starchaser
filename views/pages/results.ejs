@@ -7,8 +7,10 @@
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/modules.css">
-  <link rel="stylesheet" href="styles/weather-icons.min.css">
-
+  <!-- <link rel="stylesheet" href="styles/weather-icons.min.css" type="text/css">
+  <link rel="stylesheet" href="styles/weather-icons.css" type="text/css">
+  <link rel="stylesheet" href="styles/weather-icons-wind.min.css" type="text/css">
+  <link rel="stylesheet" href="styles/weather-icons-wind.css" type="text/css"> -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
   <link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet"> 
   <link href="https://fonts.googleapis.com/css?family=Rock+Salt&display=swap" rel="stylesheet">
@@ -29,21 +31,33 @@
   <main class="flex vertical-align">
     <section class="flex center">
       <h3>StarChasing Outlook for:</h3>
-      <h2>The Hoh Rainforest</h2>
+      <h2><%= data.parkData.locations[0].park_name %></h2>
     </section>
+      <% data.parkData.locations[0].forecasts.forEach( (forecast, idx) => { %>
 
+      
     <section class="flex center card">
       <div>
-        <h2>Tuesday</h2>
+          <% let day = new Date((data.parkData.locations[0].forecasts[idx].time * 1000)); 
+          let weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']%>
+        <h2><%= weekdays[day.getDay()] %></h2>
         <section class="flex-row">
-          <div class="flex"><h3>Moonphase</h3><i class="fas fa-moon fa-2x"></i></div>
-          <div class="flex"><h3>Weather</h3><i class="fas fa-cloud fa-2x"></i></div>
+          <div class="flex <%= data.parkData.locations[0].forecasts[idx].moonPhase %>">
+            <h3>Moonphase</h3>
+            <!-- <i class="fas fa-moon fa-2x"></i> -->
+          </div>
+          <div class="flex <%= data.parkData.locations[0].forecasts[idx].icon %>">
+            <h3>Weather</h3>
+            
+          </div>
         </section>
         <div class="flex"><h2>Outlook</h2><i class="fas fa-meh fa-2x"></i><p>meh</p></div>
       </div>
     </section>
+    <% }) %>
   </main>
 
-  
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="/js/app.js"></script>
 </body>
 </html>
