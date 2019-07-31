@@ -217,21 +217,19 @@ function getPhaseName(phase) {
   switch(true) {
   case (phase < .125):
     return 'new-moon';
-  // case (phase < .25):
-  //   return 'waxing-crescent';
+  case (phase < .25):
+    return 'waxing-crescent';
   case (phase < .375):
     return 'first-quarter';
-  // case (phase < .49):
-  //   return 'waxing-gibbous';
+  case (phase < .49):
+    return 'waxing-gibbous';
   case (phase < .52):
     return 'full-moon';
-  // case (phase < .75):
-  //   return 'waning-gibbous';
+  case (phase < .75):
+    return 'waning-gibbous';
   case (phase < .875):
     return 'last-quarter';
-  // case (phase < .100):
-  //   return 'waning-crescent';
-  case (phase < 1.00):
-    return 'new-moon';
+  case (phase < .100):
+    return 'waning-crescent';
   }
 }
