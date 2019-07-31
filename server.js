@@ -36,7 +36,11 @@ app.get('/', (request, response) => {
   response.render('pages/index');
 });
 
-app.post('/', getLatLong, getWeather, getDistances)
+app.get('/results', (request, response) => {
+  response.render('pages/results');
+})
+
+app.post('/', getLatLong, getDistances, addWeatherData)
 // app.get('/')
 
 
@@ -94,25 +98,6 @@ function getLatLong(request, response, next) {
 
 }
 
-function getWeather( request, response, next ){
-
-  const url = `https://api.darksky.net/forecast/${process.env.WEATHER_API_KEY}/${request.body.lat},${request.body.long}`;
-
-  return superagent.get(url)
-    .then( rawData => {
-      request.body.forecast = rawData.body.daily.data.map( day => {
-        let newDay = {};
-        newDay.time = day.time;
-        newDay.summary = day.summary;
-        newDay.icon = day.icon;
-        newDay.moonPhase = day.moonPhase;
-        return newDay;
-      })
-      next();
-    }).catch( error => console.log( error ) );
-}
-
-
 function createDistanceURL( request ){
 
   request.body.parkData = {};
@@ -141,7 +126,7 @@ function createDistanceURL( request ){
     }).catch( error => console.log( error, 'Database query from createURL!' ) );
 }
 
-function getDistances( request, response ){
+function getDistances( request, response, next ){
   createDistanceURL( request )
     .then( request => {
       // console.log(request.body);
@@ -158,14 +143,17 @@ function getDistances( request, response ){
           request.body.parkData.locations.filter( destination => typeof(destination.distance) === 'number' );
           sortByDistance( request.body.parkData.locations );
           request.body.parkData.locations.splice(3);
+
           const promises = [];
+
           request.body.parkData.locations.forEach(location => {
             promises.push(fetchParkDetails(location))
           })
+
           Promise.all(promises)
             .then( parkDetails => {
               request.body.parkData.locations = parkDetails;
-              response.send(request.body);
+              next();
             }).catch( err => console.log( err, 'getDistances-Promise.all') )
         }).catch( error => console.log( error, 'getDistances-createDistanceURL' ) );
     }).catch( error => console.log( error, 'getDistances' ) );
@@ -204,4 +192,41 @@ function fetchParkDetails(park) {
         return park;
       }
     }).catch( error => console.log( error, 'fetchParkDetails' ) );
+}
+
+function addWeatherData( request, response ){
+
+  const promises = [];
+
+  request.body.parkData.locations.forEach( location => {
+    promises.push(getWeatherData(location));
+  });
+
+  Promise.all(promises)
+    .then( forecasts => {
+      // console.log(forecasts);
+      request.body.parkData.locations.forEach( ( park, index ) => {
+        park.forecasts = forecasts[index];
+      });
+      console.log(request.body);
+      response.send(request.body);
+    }).catch( err => console.log( err, 'getDistances-Promise.all') )
+
+}
+
+function getWeatherData( park ){
+
+  const url = `https://api.darksky.net/forecast/${process.env.WEATHER_API_KEY}/${park.lat},${park.long}`;
+
+  return superagent.get(url)
+    .then( rawData => {
+      return rawData.body.daily.data.map( day => {
+        let newDay = {};
+        newDay.time = day.time;
+        newDay.summary = day.summary;
+        newDay.icon = day.icon;
+        newDay.moonPhase = day.moonPhase;
+        return newDay;
+      });
+    }).catch( error => console.log( error ) );
 }
