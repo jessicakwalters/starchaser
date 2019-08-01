@@ -5,15 +5,20 @@
     
     <body>
         <%- include('../partials/header.ejs'); %>
-        <main class="main">
-            <h1>NASA's image of the day</h1>
+        <main class="all-park-card nasa">
+          <div class="all-park-card-wrapper">
+            <h1>NASA Image of the Day</h1>
             <h2><%= data.title %></h2>
             <img src= "<%= data.hdurl %>" />
-            <h4>Date : <%= data.date %></h4>
-            <p><%= data.explanation %></p>
+            <h1>Date : <%= data.date %></h1>
+            <div class="description"><p><%= data.explanation %></p>
+            </div>
             <h4><%= data.copy_right %></h4>
+          </div>
         </main>
     
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="/js/app.js"></script>
     </body>
 
 </html>

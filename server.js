@@ -247,6 +247,7 @@ function getWeatherData( park ){
         newDay.moonPhase = getPhaseName(day.moonPhase);
         newDay.moonPhaseHtml = newDay.moonPhase.split('-').map(word =>word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
         newDay.outlook = getOutlook(newDay.moonPhase, newDay.icon);
+        newDay.outlookHtml = modifyOutlook(newDay.outlook);
         return newDay;
       });
     }).catch( error => console.log( error ) );
@@ -309,13 +310,25 @@ function getOutlook (moonphase, weather) {
   }
 }
 
-//filtering function 
+//filtering function
 
 const modifyWeatherIcon = (str) => {
   return str.split('-').filter(word => {
     let remove = ['day', 'night']
     return !remove.includes(word)
   }).map(word =>word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+}
+
+const modifyOutlook = (str) => {
+  if(str ==='ideal') {
+    return 'Ideal: GO!';
+  } else if(str === 'go') {
+    return 'Good'
+  }else if(str === 'meh') {
+    return'Meh';
+  }else if(str === 'no-go') {
+    return 'Nah, Netflix?';
+  }
 }
 
 
