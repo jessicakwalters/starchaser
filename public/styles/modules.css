@@ -1,5 +1,7 @@
 @media screen and (min-width: 200px) {
 
+  /*All Parks*/
+
   .title {
     padding-bottom: 10%;
   }
@@ -14,52 +16,120 @@
     margin-bottom: 20%;
     background-color: rgb(9,13,13,0.75);
   }
-
-  .park-title {
-    /* background-color: rgb(9,13,13,0.35); */
-  }
   
   .all-park-card h1 {
-    font-size: 3em;
+    font-size: 2.5em;
     /* margin-top: 10%; */
+    margin-left: 5%;
     margin-bottom: 5%;
     padding-top: 10%;
-    padding-left: 10%;
-    padding-right: 10%;
   }
 
   .all-park-card h2 {
     font-size: 1.5em;
     padding-bottom: 10%;
-    padding-left: 10%;
+    margin-left: 5%;
     padding-right: 10%;
   }
 
+  .image-container {
+    width: 100%;
+  }
   .all-park-card img {
+    margin: auto;
     width: 100%;
   }
   
   .all-park-card a {
+    width: 100%;
     text-decoration: none;
+    text-align: center;
     color: #f5f1f1;
     font-size: 1.3em;
-    border-bottom: solid 1px #f5f1f1;
+    padding: 5%;
+    background-color: #000000;
+    border: solid 1px rgb(255, 255, 255, .3);
+    margin-left: 5%;
+    margin-top: 10%;
+    margin-bottom: 10%;
   }
 
   .all-park-card button {
+    width: 100%;
     font-family: 'Dosis', sans-serif;
-    padding: 0;
+    padding: 5%;
     border: none;
-    background: none;
+    background: #000000;
     color: #f5f1f1;
     font-size: 1.3em;
-    border-bottom: solid 1px #f5f1f1;
+    border: solid 1px rgb(255, 255, 255, .3);
+    margin-right: 5%;
+    margin-top: 10%;
+    margin-bottom: 10%;
   }
 
   .learn-delete {
     display: flex;
     justify-content: space-between;
-    padding: 10% 10%;
   }
 
+  .learn-detail a{
+    text-decoration: none;
+    color: #F5F1F1;
+    font-size: 1.5em;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    
+  }
+  
+/*results*/
+
+.dark-park{
+  margin-top: 30%;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top:8%;
+}
+
+.dark-park h1{
+  padding-top: 0;
+}
+
+.all-park-card-wrapper h3{
+  font-size: 1.75em;
+  padding-top: 10%;
+  text-align: center;
+}
+.all-park-card-wrapper h4{
+  text-align: center;
+  font-size: 1.5em;
+  padding-top: 10%;
+}
+
+.all-park-card-wrapper h5{
+  font-size: 1.6em;
+  padding-top: 10%;
+}
+
+.outlook {
+  margin: auto;
+  align-items: center; 
+}
+
+.outlook > i {
+  padding: 7%;
+}
+
+.weather-icon > i{
+  padding: 10%;
+  margin-bottom: 10%;
+} 
+
+.moonphase-icon img{
+  width: 65%;
+}
 }

@@ -4,10 +4,10 @@
 <body>
   <%- include('../partials/header.ejs'); %>
 
-  <main class="flex vertical-align">
-    <section class="flex center">
-      <h3>StarChasing Outlook for:</h3>
-      <h2><%= data.parkData.locations[0].park_name %></h2>
+  <main class="all-park-card">
+    <section class="dark-park">
+      <h2>Your Closest Dark Sky Park:</h2>
+      <h1><%= data.parkData.locations[0].park_name %></h1>
     </section>
       <% data.parkData.locations[0].forecasts.forEach( (forecast, idx) => { %>
         <%- include('../partials/cards.ejs', {idx: idx, forecast: forecast}); %>
