@@ -4,6 +4,7 @@
 const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
+const methodOverride = require('method-override')
 
 // Environment variables
 require('dotenv').config();
@@ -22,27 +23,48 @@ client.on('err', err => console.log(err));
 app.use(express.urlencoded({ extended: true }));
 // Specify a directory for static resources
 app.use(express.static('./public'));
-
+// Do method override for delete function
+app.use(methodOverride((request, response) => {
+  if(request.body && typeof request.body === 'object' && '_method' in request.body) {
+    let method = request.body._method;
+    console.log(method);
+    delete request.body._method;
+    return method;
+  }
+}));
 
 // Set the view engine for server-side templating
 app.set( 'view engine', 'ejs' );
 
 // listen for requests
-app.listen( PORT, () => console.log( 'Listening on port:', PORT ) );
+app.listen( PORT, () => {
+  seedDatabase()
+  console.log( 'Listening on port:', PORT ) });
 
 // API Routes
 app.get('/', (request, response) => {
-  // test out your routes, perhaps ejs views or database stuff
   response.render('pages/index');
 });
 
 app.get('/results', (request, response) => {
   response.render('pages/results');
-})
+});
+
+app.get('/about', (request, response) => {
+  response.render('pages/about');
+});
+
+app.get('/new', (request, response) => {
+  response.render('pages/new');
+});
+
+app.post('/new', getLatLong, createNewPark)
 
 app.post('/', getLatLong, getDistances, addWeatherData)
-// app.get('/')
 
+app.get('/parks', getPark)
+
+app.delete('/parks', deletePark);
 
 //Populate database table with dark_parks json data
 
@@ -56,23 +78,23 @@ function Park(parkData) {
   this.idsa_desig = parkData.idsa_desig;
 }
 
-app.get('/parks', (request, response) => {
-  try {
-    const parkData = require('./data/dark_parks.json');
+// app.get('/parks', (request, response) => {
+//   try {
+//     const parkData = require('./data/dark_parks.json');
 
-    const newData = parkData.map(parkObj => {
+//     const newData = parkData.map(parkObj => {
 
-      const park = new Park(parkObj);
-      park.save();
-      return park;
-    })
+//       const park = new Park(parkObj);
+//       park.save();
+//       return park;
+//     })
 
-    response.send(newData);
-  }
-  catch (error) {
-    response.status(400).send({'error': error});
-  }
-});
+//     response.send(newData);
+//   }
+//   catch (error) {
+//     response.status(400).send({'error': error});
+//   }
+// });
 
 Park.prototype.save = function() {
   let SQL = `INSERT INTO dark_parks (park_name, location_name, lat, long, img_url, learn_more_url, idsa_desig) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;`;
@@ -89,6 +111,7 @@ function getLatLong(request, response, next) {
 
   return superagent.get(url)
     .then( rawData => {
+      request.body.location_name = rawData.body.results[0].address_components[2].long_name;
       request.body.formatted_address = rawData.body.results[0].formatted_address;
       request.body.lat = rawData.body.results[0].geometry.location.lat;
       request.body.long = rawData.body.results[0].geometry.location.lng;
@@ -98,7 +121,7 @@ function getLatLong(request, response, next) {
 
 }
 
-function createDistanceURL( request ){
+function fetchAllParks( request ){
 
   request.body.parkData = {};
 
@@ -109,27 +132,28 @@ function createDistanceURL( request ){
       if( results.rowCount === 0 ){
         console.log( 'no parks?' )
       } else {
-        let url = '';
         request.body.parkData.locations = results.rows.map( park => {
-          if( url.length ){
-            url += '|';
-          }
-          url += park.lat + ',' + park.long;
           let newPark = {};
           newPark.id = park.id;
           newPark.park_name = park.park_name;
           return newPark;
         });
-        request.body.parkData.url = url;
+        request.body.parkData.url = createURL( results.rows );
         return request;
       }
     }).catch( error => console.log( error, 'Database query from createURL!' ) );
 }
 
+function createURL( queriedArray ){
+  return queriedArray.reduce( ( accumArr, park ) => {
+    accumArr.push(`${park.lat},${park.long}`);
+    return accumArr;
+  }, []).join('|');
+}
+
 function getDistances( request, response, next ){
-  createDistanceURL( request )
+  fetchAllParks( request )
     .then( request => {
-      // console.log(request.body);
       let url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${request.body.lat},${request.body.long}&destinations=${request.body.parkData.url}&key=${process.env.GEOCODE_API_KEY}`;
       return superagent.get(url)
         .then( results => {
@@ -140,15 +164,15 @@ function getDistances( request, response, next ){
               request.body.parkData.locations[index].distance = destination.status;
             }
           })
-          request.body.parkData.locations.filter( destination => typeof(destination.distance) === 'number' );
+          request.body.parkData.locations = request.body.parkData.locations.filter( destination => typeof(destination.distance) === 'number' );
           sortByDistance( request.body.parkData.locations );
           request.body.parkData.locations.splice(3);
 
           const promises = [];
 
           request.body.parkData.locations.forEach(location => {
-            promises.push(fetchParkDetails(location))
-          })
+            promises.push(fetchOnePark(location));
+          });
 
           Promise.all(promises)
             .then( parkDetails => {
@@ -165,21 +189,7 @@ function sortByDistance( locations ){
   })
 }
 
-// function bulkPromises(data, handler) {
-//   const result = [];
-//   const promises = [];
-//   data.forEach(item => {
-//     promises.push(handler(item));
-//   })
-//   Promise.all(promises)
-//     .then(res => {
-//       result.push(res);
-//     })
-//     .catch(err => console.log(err))
-//   return result
-// }
-
-function fetchParkDetails(park) {
+function fetchOnePark(park) {
   let SQL = `SELECT * FROM dark_parks WHERE id=${park.id};`;
   return client.query(SQL)
     .then( Result => {
@@ -188,10 +198,9 @@ function fetchParkDetails(park) {
         park.long = Result.rows[0].long;
         park.img_url = Result.rows[0].img_url;
         park.learn_more_url = Result.rows[0].learn_more_url;
-        // console.log('this is from fetchParkDetails', park);
         return park;
       }
-    }).catch( error => console.log( error, 'fetchParkDetails' ) );
+    }).catch( error => console.log( error, 'fetchOnePark' ) );
 }
 
 function addWeatherData( request, response ){
@@ -204,12 +213,10 @@ function addWeatherData( request, response ){
 
   Promise.all(promises)
     .then( forecasts => {
-      // console.log(forecasts);
       request.body.parkData.locations.forEach( ( park, index ) => {
         park.forecasts = forecasts[index];
       });
-      console.log(request.body);
-      response.send(request.body);
+      response.render('pages/results', {data: request.body});
     }).catch( err => console.log( err, 'getDistances-Promise.all') )
 
 }
@@ -225,8 +232,107 @@ function getWeatherData( park ){
         newDay.time = day.time;
         newDay.summary = day.summary;
         newDay.icon = day.icon;
-        newDay.moonPhase = day.moonPhase;
+        newDay.moonPhase = getPhaseName(day.moonPhase);
+        newDay.outlook = getOutlook(newDay.moonPhase, newDay.icon);
         return newDay;
       });
     }).catch( error => console.log( error ) );
+}
+
+function getPhaseName(phase) {
+  switch(true) {
+  case (phase < .125):
+    return 'new-moon';
+  case (phase < .25):
+    return 'waxing-crescent';
+  case (phase < .375):
+    return 'first-quarter';
+  case (phase < .49):
+    return 'waxing-gibbous';
+  case (phase < .52):
+    return 'full-moon';
+  case (phase < .75):
+    return 'waning-gibbous';
+  case (phase < .875):
+    return 'last-quarter';
+  case (phase < .100):
+    return 'waning-crescent';
+  }
+}
+
+function seedDatabase () {
+  let SQL = `SELECT * FROM dark_parks;`;
+
+  client.query(SQL)
+    .then(results => {
+      if(results.rowCount === 0) {
+        const parkData = require('./data/dark_parks.json');
+
+        const newData = parkData.map(parkObj => {
+
+          const park = new Park(parkObj);
+          park.save();
+          return park;
+        });
+      }
+    }).catch( err => console.log( err, 'getDistances-Promise.all') )
+}
+
+function getPark (request, response) {
+  let SQL = `SELECT * FROM dark_parks;`;
+
+  client.query(SQL)
+    .then(results => {
+      if(results.rowCount === 0) {
+        response.send('No park matches.');
+      } else {
+        response.render('pages/allparks', {data : results.rows});
+      }
+    })
+}
+
+function getOutlook (moonphase, weather) {
+
+  let goodWeather = ['clear-day', 'clear-night'];
+  let mehWeather = ['wind', 'partly-cloudy-day', 'partly-cloudy-night'];
+  let notIdealWeather = ['rain', 'snow', 'sleet', 'cloudy', 'fog'];
+  
+  if ((goodWeather.includes(weather)) && (moonphase === 'new-moon')) {
+    return 'ideal';
+  }
+  else if ((goodWeather.includes(weather)) && (moonphase !== 'new-moon')) {
+    return 'go'
+  }
+  else if (mehWeather.includes(weather)) {
+    return 'meh';
+  }
+  else if (notIdealWeather.includes(weather)) {
+    return 'no-go';
+  }
+  else {
+    return 'meh';
+  }
+}
+
+function createNewPark (request, response) {
+  let newParkObj = {};
+  newParkObj.park_name = request.body.search;
+  newParkObj.location_name = request.body.location_name;
+  newParkObj.lat = request.body.lat;
+  newParkObj.long = request.body.long;
+  newParkObj.img_url = request.body.img_url;
+  newParkObj.learn_more_url = request.body.learn_more_url;
+  let newPark = new Park(newParkObj);
+  newPark.save();
+  response.send(newPark);
+}
+
+function deletePark (request, response) {
+  let SQL = `DELETE FROM dark_parks WHERE id = $1;`;
+  let values = [request.body.id];
+
+  client.query(SQL, values)
+    .then( results => {
+      response.redirect('/parks');
+    }).catch(error => console.log(error));
 }
