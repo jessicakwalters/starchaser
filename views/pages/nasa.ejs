@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head.ejs'); %>
+    
+    <body>
+        <%- include('../partials/header.ejs'); %>
+        <main class="main">
+            <h1>NASA's image of the day</h1>
+            <h2><%= data.title %></h2>
+            <img src= "<%= data.hdurl %>" />
+            <h4>Date : <%= data.date %></h4>
+            <p><%= data.explanation %></p>
+            <h4><%= data.copy_right %></h4>
+        </main>
+    
+    </body>
+
+</html>
