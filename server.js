@@ -342,7 +342,7 @@ function createNewPark (request, response) {
   newParkObj.learn_more_url = request.body.learn_more_url;
   let newPark = new Park(newParkObj);
   newPark.save();
-  response.send(newPark);
+  response.redirect('/parks');
 }
 
 function deletePark (request, response) {
