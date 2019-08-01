@@ -1,0 +1,65 @@
+@media screen and (min-width: 200px) {
+
+  .title {
+    padding-bottom: 10%;
+  }
+
+  .all-park-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .all-park-card-wrapper {
+    margin-bottom: 20%;
+    background-color: rgb(9,13,13,0.75);
+  }
+
+  .park-title {
+    /* background-color: rgb(9,13,13,0.35); */
+  }
+  
+  .all-park-card h1 {
+    font-size: 3em;
+    /* margin-top: 10%; */
+    margin-bottom: 5%;
+    padding-top: 10%;
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  .all-park-card h2 {
+    font-size: 1.5em;
+    padding-bottom: 10%;
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  .all-park-card img {
+    width: 100%;
+  }
+  
+  .all-park-card a {
+    text-decoration: none;
+    color: #f5f1f1;
+    font-size: 1.3em;
+    border-bottom: solid 1px #f5f1f1;
+  }
+
+  .all-park-card button {
+    font-family: 'Dosis', sans-serif;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #f5f1f1;
+    font-size: 1.3em;
+    border-bottom: solid 1px #f5f1f1;
+  }
+
+  .learn-delete {
+    display: flex;
+    justify-content: space-between;
+    padding: 10% 10%;
+  }
+
+}
