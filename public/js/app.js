@@ -1,16 +1,16 @@
 $(document).ready();
 $('.fa-times').hide();
 
-$('.clear-day').append('<i class="fas fa-sun fa-2x"></i>');
-$('.clear-night').append('<i class="fas fa-moon fa-2x"></i>');
-$('.rain').append('<i class="fas fa-cloud-rain fa-2x"></i>');
-$('.snow').append('<i class="fas fa-snowflake fa-2x"></i>');
-$('.sleet').append('<i class="fas fa-cloud-rain fa-2x"></i>');
-$('.wind').append('<i class="fas fa-wind fa-2x"></i>');
-$('.fog').append('<i class="fas fa-smog fa-2x"></i>');
-$('.cloudy').append('<i class="fas fa-cloud fa-2x"></i>');
-$('.partly-cloudy-day').append('<i class="fas fa-cloud-sun fa-2x"></i>');
-$('.partly-cloudy-night').append('<i class="fas fa-cloud-moon fa-2x"></i>');
+$('.clear-day').append('<i class="fas fa-sun fa-4x"></i>');
+$('.clear-night').append('<i class="fas fa-moon fa-4x"></i>');
+$('.rain').append('<i class="fas fa-cloud-rain fa-4x"></i>');
+$('.snow').append('<i class="fas fa-snowflake fa-4x"></i>');
+$('.sleet').append('<i class="fas fa-cloud-rain fa-4x"></i>');
+$('.wind').append('<i class="fas fa-wind fa-4x"></i>');
+$('.fog').append('<i class="fas fa-smog fa-4x"></i>');
+$('.cloudy').append('<i class="fas fa-cloud fa-4x"></i>');
+$('.partly-cloudy-day').append('<i class="fas fa-cloud-sun fa-4x"></i>');
+$('.partly-cloudy-night').append('<i class="fas fa-cloud-moon fa-4x"></i>');
 
 $('.new-moon').append('<img src="assets/svg/wi-moon-new.svg">');
 $('.test').append('<img src="assets/svg/wi-moon-waning-crescent-3.svg">');
@@ -22,10 +22,10 @@ $('.waxing-crescent').append('<img src="assets/svg/wi-moon-waxing-crescent-3.svg
 $('.waning-gibbous').append('<img src="assets/svg/wi-moon-waning-gibbous-3.svg">');
 $('.waning-crescent').append('<img src="assets/svg/wi-moon-waning-crescent-3.svg">');
 
-$('.ideal').append('<i class="fas fa-grin-stars fa-2x"></i>');
-$('.go').append('<i class="fas fa-smile fa-2x"></i>');
-$('.meh').append('<i class="fas fa-meh fa-2x"></i>');
-$('.no-go').append('<i class="fas fa-frown fa-2x"></i>');
+$('.ideal').append('<i class="fas fa-grin-stars fa-4x"></i>');
+$('.go').append('<i class="fas fa-smile fa-4x"></i>');
+$('.meh').append('<i class="fas fa-meh fa-4x"></i>');
+$('.no-go').append('<i class="fas fa-frown fa-4x"></i>');
 
 
 $('.fa-bars').on('click', event => {
