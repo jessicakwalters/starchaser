@@ -1,6 +1,6 @@
 <div class="all-park-card">
   <% data.forEach( park => { %>
-  <div class="all-park-card-wrapper"
+  <div class="all-park-card-wrapper">
   <form action="/parks" id="<%= park.id %>" method="POST">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="id" value="<%= park.id %>">
