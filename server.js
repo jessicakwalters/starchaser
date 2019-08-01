@@ -216,7 +216,6 @@ function addWeatherData( request, response ){
       request.body.parkData.locations.forEach( ( park, index ) => {
         park.forecasts = forecasts[index];
       });
-      console.log(request.body.parkData.locations[0].forecasts);
       response.render('pages/results', {data: request.body});
     }).catch( err => console.log( err, 'getDistances-Promise.all') )
 
@@ -316,7 +315,6 @@ function getOutlook (moonphase, weather) {
 }
 
 function createNewPark (request, response) {
-  console.log(request.body);
   let newParkObj = {};
   newParkObj.park_name = request.body.search;
   newParkObj.location_name = request.body.location_name;
@@ -326,7 +324,6 @@ function createNewPark (request, response) {
   newParkObj.learn_more_url = request.body.learn_more_url;
   let newPark = new Park(newParkObj);
   newPark.save();
-  console.log(newPark);
   response.send(newPark);
 }
 
