@@ -1,17 +1,13 @@
 @media screen and (min-width: 200px) {
-
   /*All Parks*/
-
   .title {
     padding-bottom: 10%;
   }
-
   .all-park-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
-
   .all-park-card-wrapper {
     margin-bottom: 20%;
     background-color: rgb(9,13,13,0.75);
@@ -24,14 +20,12 @@
     margin-bottom: 5%;
     padding-top: 10%;
   }
-
   .all-park-card h2 {
     font-size: 1.5em;
     padding-bottom: 10%;
     margin-left: 5%;
     padding-right: 10%;
   }
-
   .image-container {
     width: 100%;
   }
@@ -53,7 +47,6 @@
     margin-top: 10%;
     margin-bottom: 10%;
   }
-
   .all-park-card button {
     width: 100%;
     font-family: 'Dosis', sans-serif;
@@ -67,12 +60,10 @@
     margin-top: 10%;
     margin-bottom: 10%;
   }
-
   .learn-delete {
     display: flex;
     justify-content: space-between;
   }
-
   .learn-detail a{
     text-decoration: none;
     color: #F5F1F1;
@@ -83,22 +74,18 @@
   }
   
 /*results*/
-
 .dark-park{
   margin-top: 30%;
 }
-
 .flex-row {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin-top:8%;
 }
-
 .dark-park h1{
   padding-top: 0;
 }
-
 .all-park-card-wrapper h3{
   font-size: 1.75em;
   padding-top: 10%;
@@ -109,70 +96,55 @@
   font-size: 1.5em;
   padding-top: 10%;
 }
-
 .all-park-card-wrapper h5{
   font-size: 1.6em;
   padding-top: 10%;
 }
-
 .outlook {
   margin: auto;
   align-items: center; 
 }
-
 .outlook > i {
   padding: 7%;
 }
-
 .weather-icon > i{
   padding: 10%;
   margin-bottom: 10%;
 } 
-
 .moonphase-icon img{
   width: 65%;
 }
-
  /*About Us*/
-
 .team h2 {
   font-size: 1.5em;
   padding-bottom: 5%;
   padding-top: 5%;
 }
-
 #intro {
   margin:auto;
   margin-top: 30%
 }
-
 .description > p {
   margin: 10%;
   font-size: 1.5em;
   line-height: 1.25em;
 }
-
 /* NASA */
-
 .nasa {
   margin-top: 20%;
 }
 }
-
 @media screen and (min-width: 500px) {
-
   .location-form {
     width: 60%;
     margin-top: 50%;
   }
-
   .all-park-card {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
   }
-
   .dark-park h1 {
     padding-top: 2%;
     padding-bottom: 5%;
@@ -183,29 +155,23 @@
     padding-top: 0;
     font-size: 1.5em;
   }
-
   .dark-park {
     margin-top: 20%;
   }
-
   .all-park-card-wrapper {
     margin-bottom: 5%;
     width: 400px;
     margin-left: 2%;
     margin-right: 2%;  
   }
-
   .image-container {
     height: 300px;
     width: 100%;
   }
-
   #intro {
     margin-top: 15%
   }
-
   .nasa .all-park-card-wrapper {
     width: 80%;
   }
-
 }
