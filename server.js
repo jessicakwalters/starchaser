@@ -1,6 +1,7 @@
 'use strict'
 
 // Application Dependencies
+
 const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
@@ -21,8 +22,10 @@ client.on('err', err => console.log(err));
 // Express middleware
 // Utilize ExpressJS functionality to parse the body of the request
 app.use(express.urlencoded({ extended: true }));
+
 // Specify a directory for static resources
 app.use(express.static('./public'));
+
 // Do method override for delete function
 app.use(methodOverride((request, response) => {
   if(request.body && typeof request.body === 'object' && '_method' in request.body) {
@@ -81,24 +84,8 @@ function Park(parkData) {
   this.idsa_desig = parkData.idsa_desig;
 }
 
-// app.get('/parks', (request, response) => {
-//   try {
-//     const parkData = require('./data/dark_parks.json');
 
-//     const newData = parkData.map(parkObj => {
-
-//       const park = new Park(parkObj);
-//       park.save();
-//       return park;
-//     })
-
-//     response.send(newData);
-//   }
-//   catch (error) {
-//     response.status(400).send({'error': error});
-//   }
-// });
-
+//Save parks to DataBase
 Park.prototype.save = function() {
   let SQL = `INSERT INTO dark_parks (park_name, location_name, lat, long, img_url, learn_more_url, idsa_desig) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;`;
 
@@ -108,6 +95,25 @@ Park.prototype.save = function() {
 };
 
 
+function seedDatabase () {
+  let SQL = `SELECT * FROM dark_parks;`;
+
+  client.query(SQL)
+    .then(results => {
+      if(results.rowCount === 0) {
+        const parkData = require('./data/dark_parks.json');
+
+        const newData = parkData.map(parkObj => {
+
+          const park = new Park(parkObj);
+          park.save();
+          return park;
+        });
+      }
+    }).catch( err => console.log( err, 'getDistances-Promise.all') )
+}
+
+//Get Latitude and Longitude from GEOCODE API
 function getLatLong(request, response, next) {
 
   let url= `https://maps.googleapis.com/maps/api/geocode/json?address=${request.body.search}&key=${process.env.GEOCODE_API_KEY}`;
@@ -124,6 +130,7 @@ function getLatLong(request, response, next) {
 
 }
 
+//Get park data from databse
 function fetchAllParks( request ){
 
   request.body.parkData = {};
@@ -154,6 +161,7 @@ function createURL( queriedArray ){
   }, []).join('|');
 }
 
+//Get distances between user's location and park by sending lat & long to distance matrix API
 function getDistances( request, response, next ){
   fetchAllParks( request )
     .then( request => {
@@ -235,7 +243,9 @@ function getWeatherData( park ){
         newDay.time = day.time;
         newDay.summary = day.summary;
         newDay.icon = day.icon;
+        newDay.iconHtml = modifyWeatherIcon(newDay.icon);
         newDay.moonPhase = getPhaseName(day.moonPhase);
+        newDay.moonPhaseHtml = newDay.moonPhase.split('-').map(word =>word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
         newDay.outlook = getOutlook(newDay.moonPhase, newDay.icon);
         return newDay;
       });
@@ -261,24 +271,6 @@ function getPhaseName(phase) {
   case (phase < .100):
     return 'waning-crescent';
   }
-}
-
-function seedDatabase () {
-  let SQL = `SELECT * FROM dark_parks;`;
-
-  client.query(SQL)
-    .then(results => {
-      if(results.rowCount === 0) {
-        const parkData = require('./data/dark_parks.json');
-
-        const newData = parkData.map(parkObj => {
-
-          const park = new Park(parkObj);
-          park.save();
-          return park;
-        });
-      }
-    }).catch( err => console.log( err, 'getDistances-Promise.all') )
 }
 
 function getPark (request, response) {
@@ -316,6 +308,16 @@ function getOutlook (moonphase, weather) {
     return 'meh';
   }
 }
+
+//filtering function 
+
+const modifyWeatherIcon = (str) => {
+  return str.split('-').filter(word => {
+    let remove = ['day', 'night']
+    return !remove.includes(word)
+  }).map(word =>word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+}
+
 
 function createNewPark (request, response) {
   let newParkObj = {};
