@@ -1,164 +1,164 @@
 [
-  {
+    {
       "park_name": "Massacre Rim Wilderness Study Area",
-      "location_name": "WA, USAshoe County, NV",
-      "lat": "41.700787",
-      "long": "-119.684207",
+      "location_name": "Shoe County, NV",
+      "lat": 41.700787,
+      "long": -119.684207,
       "img_url": "https://www.darksky.org/wp-content/uploads/2019/04/NVoutback_MassacreRim_BednarskiR_3561-500x500.jpg",
       "learn_more_url": "https://www.nevadawilderness.org/massacre_rim_wilderness_study_area",
       "idsa_desig": "x"
-  },
-  {
+    },
+    {
       "park_name": "Glacier National Park",
       "location_name": "Flathead County, MT",
-      "lat": "48.7596",
-      "long": "113.787",
+      "lat": 48.7596,
+      "long": 113.787,
       "img_url": "https://www.nps.gov/glac/learn/nature/images/nightskyLP_1.jpg?maxwidth=1200&autorotate=false",
       "learn_more_url": "https://www.nps.gov/glac/learn/nature/night-sky.htm",
       "idsa_desig": "x"
-  },
-  {
+    },
+    {
       "park_name": "Waterton Lakes National Park",
-      "location_name": "WA, USAterton Park, AB, CAN",
-      "lat": "49.0833",
-      "long": "113.9167",
+      "location_name": "Waterton Park, AB, CAN",
+      "lat": 49.0833,
+      "long": 113.9167,
       "img_url": "https://media-cdn.tripadvisor.com/media/photo-s/13/1f/1d/ec/the-milky-way-over-waterton.jpg",
       "learn_more_url": "https://www.pc.gc.ca/en/pn-np/ab/waterton/",
       "idsa_desig": "x"
-  },
-  {
+    },
+    {
       "park_name": "Steamboat Rock State Park",
       "location_name": "Electric City, WA, USA",
-      "lat": "47.8578299",
-      "long": "-119.1333328",
+      "lat": 47.8578299,
+      "long": -119.1333328,
       "img_url": "https://i.pinimg.com/originals/fd/86/93/fd8693ab4f3c18457bc2e4e64caa1b30.jpg",
       "learn_more_url": "https://parks.state.wa.us/590/Steamboat-Rock",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Umtanum Creek Canyon",
       "location_name": "Yakima, WA, USA",
-      "lat": "47.8578299",
-      "long": "120.4829",
+      "lat": 47.8578299,
+      "long": 120.4829,
       "img_url": "https://live.staticflickr.com/1688/23478940504_15661dce91_b.jpg",
       "learn_more_url": "https://www.wta.org/go-hiking/hikes/umtanum-creek-canyon",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Mary E. Theler Wetlands",
       "location_name": "Belfair, WA, USA",
-      "lat": "47.438808",
-      "long": "-122.83524",
+      "lat": 47.438808,
+      "long": -122.83524,
       "img_url": "http://www.southsoundtalk.com/wp-content/uploads/2015/11/1563da6230a5e5-Theler-Wetlands.jpg",
       "learn_more_url": "https://www.wta.org/go-hiking/hikes/mary-e-theler-wetlands-nature-preserve",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Mount Constitution",
       "location_name": "San Juan County, WA, USA",
-      "lat": "48.677605",
-      "long": "-122.831017",
+      "lat": 48.677605,
+      "long": -122.831017,
       "img_url": "https://parks.state.wa.us/ImageRepository/Document?documentID=10480",
       "learn_more_url": "https://moranstatepark.com/mount-constitution/",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Klickitat Trail",
       "location_name": "Klickitat County, WA, USA",
-      "lat": "45.760249",
-      "long": "-121.070947",
+      "lat": 45.760249,
+      "long": -121.070947,
       "img_url": "https://media2.trover.com/T/550a59f28e7cb22cce00092f/fixedw_large_4x.jpg",
       "learn_more_url": "https://www.wta.org/go-hiking/hikes/klickitat-rail-trail",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Silver Lake",
       "location_name": "Pierce County, WA, USA",
-      "lat": "46.3125",
-      "long": "122.795",
+      "lat": 46.3125,
+      "long": 122.795,
       "img_url": "https://d3mqmy22owj503.cloudfront.net/05/500005/images/poi/silver-lake-park/412-silver-lake-park-whatcom-county-1.jpg",
       "learn_more_url": "https://whatcomcounty.us/1937/Silver-Lake-Park",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Kalaloch - Third Beach",
       "location_name": "Calallam county, WA, USA",
-      "lat": "47.604524",
-      "long": "-124.372416",
+      "lat": 47.604524,
+      "long": -124.372416,
       "img_url": "https://live.staticflickr.com/4322/35973237056_57e45e4b5c_b.jpg",
       "learn_more_url": "https://www.nps.gov/olym/planyourvisit/third-beach-trail.htm",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Spruce Railroad",
       "location_name": "Port Angeles, WA, USA",
-      "lat": "48.073631",
-      "long": "-123.927409",
+      "lat": 48.073631,
+      "long": -123.927409,
       "img_url": "http://3.bp.blogspot.com/-AjMXzVTp8J8/TeMizzh_FnI/AAAAAAAAFzU/1eOt4vJJE14/s1600/DSCN0477.jpg",
       "learn_more_url": "https://www.visitportangeles.com/spruce-railroad-trail/",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Artist Ridge - Huntoon Point",
       "location_name": "Mount Baker, WA, USA",
-      "lat": "48.8467",
-      "long": "-121.691",
+      "lat": 48.8467,
+      "long": -121.691,
       "img_url": "https://www.wta.org/site_images/hikes/aidan-mt-baker-huntoon-8-10.jpg/@@images/129d121f-ef85-4c74-b0ee-33466d1c03eb.jpeg",
       "learn_more_url": "https://www.wta.org/go-hiking/hikes/artist-ridge",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Samish Overlook",
       "location_name": "Whatcom County, WA, USA",
-      "lat": "48.6096",
-      "long": "122.4264",
+      "lat": 48.6096,
+      "long": 122.4264,
       "img_url": "https://northwesternimages.files.wordpress.com/2016/06/samish-overlook-2.jpg?w=768",
       "learn_more_url": "https://www.theoutbound.com/washington/chillin/catch-a-sunset-at-the-samish-overlook",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Harts Pass",
       "location_name": "Whatcom County, WA, USA",
-      "lat": "48.7205",
-      "long": "120.6698",
+      "lat": 48.7205,
+      "long": 120.6698,
       "img_url": "https://static.rootsrated.com/image/upload/s--uradLp8u--/t_rr_large_natural/yy9m9eb1oxnzbxvpqg1q.jpg",
       "learn_more_url": "https://www.fs.fed.us/wildflowers/regions/Pacific_Northwest/HartsPass/index.shtml",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Ozette Triangle",
       "location_name": "Clallam County, WA, USA",
-      "lat": "48.154369",
-      "long": "-124.667882",
+      "lat": 48.154369,
+      "long": -124.667882,
       "img_url": "https://static.rootsrated.com/image/upload/s--HdbT6P4h--/t_rr_large_traditional/jqazp9cls0ac9w1kld90.jpg",
       "learn_more_url": "https://www.nps.gov/olym/planyourvisit/ozette-loop.htm",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Hoh Rainforest",
       "location_name": "Olympic Peninsula, WA, USA",
-      "lat": "47.8609",
-      "long": "123.9348",
+      "lat": 47.8609,
+      "long": 123.9348,
       "img_url": "https://static.rootsrated.com/image/upload/s--QmgE04fv--/t_rr_large_traditional/qddmy8qurqfim9huqupi.jpg",
       "learn_more_url": "https://www.nps.gov/olym/planyourvisit/visiting-the-hoh.htm",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "North Cascades",
       "location_name": "WA, USA",
-      "lat": "48.7718",
-      "long": "121.2985",
+      "lat": 48.7718,
+      "long": 121.2985,
       "img_url": "https://static.rootsrated.com/image/upload/s--4M9LCyeC--/t_rr_large_natural/b8ui0jhhapnbcj07ehh2.jpg",
       "learn_more_url": "https://www.nps.gov/noca/index.htm",
       "idsa_desig": ""
-  },
-  {
+    },
+    {
       "park_name": "Mount Adams",
       "location_name": "Yakima County, WA, USA",
-      "lat": "46.2024",
-      "long": "121.491",
+      "lat": 46.2024,
+      "long": 121.491,
       "img_url": "https://static.rootsrated.com/image/upload/s--dqLkmTHx--/t_rr_large_traditional/atv8pxw6x9ofgtzmn697.jpg",
       "learn_more_url": "https://www.fs.usda.gov/recarea/giffordpinchot/recarea/?recid=31184",
       "idsa_desig": ""
-  }
-]
+    }
+  ]
