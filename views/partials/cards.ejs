@@ -1,20 +1,21 @@
-<section class="all-park-card-wrapper ">
+<section class="flex center card">
     <div>
         <% let day = new Date((data.parkData.locations[0].forecasts[idx].time * 1000)); 
         let weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']%>
-      <h3><%= weekdays[day.getDay()] %></h3>
+      <h2><%= weekdays[day.getDay()] %></h2>
       <section class="flex-row">
+        <div class="flex <%= data.parkData.locations[0].forecasts[idx].moonPhase %>">
+          <h3><%=  data.parkData.locations[0].forecasts[idx].moonPhaseHtml %></h3>
+          <%# data.parkData.locations[0].forecasts[idx].moonPhase %>
 
-        <div class="flex moonphase-icon <%= data.parkData.locations[0].forecasts[idx].moonPhase %>">
-          <h4><%=  data.parkData.locations[0].forecasts[idx].moonPhaseHtml %></h4>
+          <!-- <i class="fas fa-moon fa-2x"></i> -->
         </div>
         <div class="flex weather-icon <%= data.parkData.locations[0].forecasts[idx].icon %>">
-          <h4><%= data.parkData.locations[0].forecasts[idx].iconHtml %></h4>          
-
+          <h3><%= data.parkData.locations[0].forecasts[idx].iconHtml %></h3>          
         </div>
       </section>
-        <div class="outlook flex <%= data.parkData.locations[0].forecasts[idx].outlook %>">
-          <h5>Outlook</h5>
+      <div class="flex <%= data.parkData.locations[0].forecasts[idx].outlook%>">
+      <h2> <%= data.parkData.locations[0].forecasts[idx].outlookHtml%></h2>
         </div>      
     </div>
   </section>
