@@ -66,6 +66,9 @@ app.get('/parks', getPark)
 
 app.delete('/parks', deletePark);
 
+app.get('/nasa', getImgOfDay)
+
+
 //Populate database table with dark_parks json data
 
 function Park(parkData) {
@@ -336,3 +339,21 @@ function deletePark (request, response) {
       response.redirect('/parks');
     }).catch(error => console.log(error));
 }
+
+function getImgOfDay(request, response) {
+  let url = `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_API_KEY}`;
+
+  return superagent.get(url)
+    .then( rawData => {
+      let nasaObj = {};
+      
+      nasaObj.copy_right = rawData.body.copy_right;
+      nasaObj.date = rawData.body.date;
+      nasaObj.explanation = rawData.body.explanation;
+      nasaObj.hdurl = rawData.body.hdurl;
+      nasaObj.title = rawData.body.title;
+      response.render('pages/nasa', {data: nasaObj});
+    })
+    .catch( error => console.log( error ) );
+}
+

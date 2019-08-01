@@ -228,3 +228,16 @@
   background-color: #231823;
   
 }
+  img {
+  fill: #F5F1F1;
+  width: 80%;
+  height: 40%;
+  margin: auto;
+  margin-left: 10%;
+  }
+  .main {
+    margin: auto;
+    margin-top: 40%;
+    
+  }
+}
