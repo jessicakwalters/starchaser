@@ -1,11 +1,18 @@
 @media screen and (min-width: 200px) {
 
+  .title {
+    padding-bottom: 10%;
+  }
+
   .all-park-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: rgb(9,13,13,0.35);
-    /* margin-bottom: 20%; */
+  }
+
+  .all-park-card-wrapper {
+    margin-bottom: 20%;
+    background-color: rgb(9,13,13,0.75);
   }
 
   .park-title {
@@ -13,8 +20,8 @@
   }
   
   .all-park-card h1 {
-    font-size: 2em;
-    margin-top: 10%;
+    font-size: 3em;
+    /* margin-top: 10%; */
     margin-bottom: 5%;
     padding-top: 10%;
     padding-left: 10%;
@@ -52,9 +59,7 @@
   .learn-delete {
     display: flex;
     justify-content: space-between;
-    padding-top: 5%;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding: 10% 10%;
   }
 
 }
