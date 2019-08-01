@@ -1,7 +1,4 @@
-
-
 @media screen and (min-width: 200px) {
-
   body {
     width: 90%;
     color: #F5F1F1;
@@ -20,13 +17,10 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
-
-  h1{
+  h1 {
     font-size: 2em;
   }
-
 /* Navigation */
-
   ul {
     list-style-type: none;
     display: flex;
@@ -36,7 +30,6 @@
     padding-right: 4%;
     padding-top: 2%;
   }
-
   nav {
     width: 100%;
     background-color: rgb(9,13,13);
@@ -49,70 +42,56 @@
     padding-bottom: 4%;
     z-index: 10;
   }
-
   .logo-container {
     display: flex;
     align-items: center;
   }
-
   #logo-text {
     text-decoration: none;
     color: #FFFFFF;
   }
-
   .logo-title {
     padding-left: 10%;
     font-size: 1.5em;
   }
-
   #menu li {
     text-align: center;
     width: 100%;
     padding-top: 5%;
     padding-bottom: 5%;
   }
-
   #menu li:hover {
     cursor: pointer;
     background-color: #1F2323;
   }
-
   /*Layout*/
-
   .flex {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
   }
-
   .flex-row {
     align-items: center;
   }
-
   .hide {
     display: none;
   }
-
   .center {
     margin-left: auto;
     margin-right: auto;
     margin-top: 5%;
   }
-
   .vertical-align {
     margin-top: 25%;
   }
-
   /*home page*/
-
   .location-form {
     width: 70%;
     margin-top: 80%;
     margin-left: auto;
     margin-right: auto;
   }
-
   input[type=text] {
     background: transparent;
     border: none;
@@ -122,52 +101,15 @@
     width: 100%;
     color: white;
   }
-
   ::placeholder {
     color:white;
     opacity: 1;
   }
-
   input:focus {
     outline: none;
   }
-
-   /*About Us*/
-  .team{
-    margin-top: 40%;
-  }
-  #intro{
-    margin:auto;
-    margin-bottom: 10%;
-  }
-
-  .person{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    padding:5%;
-    margin-bottom: 5%;
     
-  }
-  .person > img{
-    width: 30%;
-    height:30%;
-    margin-right:20%;
-
-  }
-  .person > h4{
-  margin:auto;
-  padding-top: 10%;
-  }
-  .description > p {
-    font-size: 50%;
-  }
-
-  
   /*Add New Park*/
-
   #park-name{
     margin-bottom: 5%;
   }
@@ -177,10 +119,7 @@
   #park_url{
     margin-bottom: 5%;
   }
-
-
   /* Add New Park Page */
-
   .new-park-button {
     font-family: 'Dosis', sans-serif;
     padding: 5%;
@@ -191,12 +130,22 @@
     border: solid 1px rgb(255, 255, 255, .3);
     margin-top: 10%;
   }
-
   .new-park {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 60%;
   }
-
+}
+@media screen and (min-width: 500px) {
+  nav {
+    border: none;
+  }
+  h1{
+    font-size: 4em;
+  }
+  .new-park {
+    margin-top: 30%;
+  }
+  
 }
