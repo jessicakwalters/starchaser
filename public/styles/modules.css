@@ -10,7 +10,8 @@
   }
   .all-park-card-wrapper {
     margin-bottom: 20%;
-    background-color: rgb(9,13,13,0.75);
+    background-color: #000000;
+    opacity: .7;
   }
   
   .all-park-card h1 {
@@ -85,6 +86,8 @@
 }
 .dark-park h1{
   padding-top: 0;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 .all-park-card-wrapper h3{
   font-size: 1.75em;
