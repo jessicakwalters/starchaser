@@ -133,6 +133,10 @@
 .nasa {
   margin-top: 20%;
 }
+.profile {
+  height: 750px;
+}
+
 }
 @media screen and (min-width: 500px) {
   .location-form {
@@ -178,4 +182,6 @@
   .image-container-dog {
     width: 100%;
   }
+
+  
 }
