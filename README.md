@@ -1,5 +1,5 @@
 # StarChaser
-A dark park, weather, and moon phase-based stargazing outlook app for those who love the stars.
+A mobile-first and responsive dark park, weather, and moon phase-based stargazing outlook app for those who love the stars.
 
 ## Authors
 + Eric Huang (https://github.com/HiEricHere)
