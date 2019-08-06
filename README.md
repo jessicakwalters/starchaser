@@ -2,10 +2,10 @@
 A dark park, weather, and moon phase-based stargazing outlook app for those who love the stars.
 
 ## Authors
-Eric Huang (https://github.com/HiEricHere)
-Gina Pultorak 
-Hanna Alemu (https://github.com/hannaalemu)
-Jessica Walters
++ Eric Huang (https://github.com/HiEricHere)
++ Gina Pultorak 
++ Hanna Alemu (https://github.com/hannaalemu)
++ Jessica Walters
 
 ## About the Project
 
@@ -19,39 +19,39 @@ Provides an eight-day weather and moonphase forecast of the park along with an o
 
 ### Front-End
 
-HTML
-CSS
-JQuery
++ HTML
++ CSS
++ JQuery
 
 ### Back-End
 
-EJS(Embedded JavaScript Templates)
-Node.JS
-Express.JS
-POSTGRESQL
++ EJS(Embedded JavaScript Templates)
++ Node.JS
++ Express.JS
++ POSTGRESQL
 
 ## APIs Used
 
-Google's GeoCode and Distance-Matrix API - location
-Darksky API - weather and moon phase
-NASA's APOD API - NASA image of the day
++ Google's GeoCode and Distance-Matrix API - location
++ Darksky API - weather and moon phase
++ NASA's APOD API - NASA image of the day
 
 ## Miscellaneous Tools
 
-Version-Control: Git, Github
-App Deployment: Heroku
-Task Managment: Trello
++ Version-Control: Git, Github
++ App Deployment: Heroku
++ Task Managment: Trello
 
 
 ## Getting Started
 
 ##### Install dependencies
-npm install
++ npm install
 
 ### Get API keys
-Geocode API key: https://developers.google.com/maps/documentation/geocoding/get-api-key (Enable Distance-Matrix feature)
-Darksky API key: https://darksky.net/dev/register
-NASA API key: https://api.nasa.gov/#apply-for-an-api-key
++ Geocode API key: https://developers.google.com/maps/documentation/geocoding/get-api-key (Enable Distance-Matrix feature)
++ Darksky API key: https://darksky.net/dev/register
++ NASA API key: https://api.nasa.gov/#apply-for-an-api-key
 
 
 ### License
