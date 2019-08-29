@@ -3,7 +3,7 @@ A mobile-first and responsive dark park, weather, and moon phase-based stargazin
 
 # Deployed version on Heroku
 
-starchaserdarkparks.herokuapp.com
+(starchaserdarkparks.herokuapp.com)
 
 ## Authors
 + Eric Huang (https://github.com/HiEricHere)
